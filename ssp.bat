@@ -90,7 +90,7 @@ del /f /q simplesystemprep\privacy-script.bat
 cls
 
 @echo cleaning up
-del /f /q simplesystemprep\
+rmdir simplesystemprep
 cls
 
 @echo all actions completed
