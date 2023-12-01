@@ -1,3 +1,24 @@
+
+:: This script does
+:: 
+:: Download & installs DirectX (Game Compatiblity)
+:: Download & installs VCRedist 2005-2023 x86 & x64 (Game Compatiblity)
+:: Download & installs Steam (Game Library & Storefront)
+:: Download & installs Heroic (Epic Games Launcher & Good Old Games's Library and Storefronts, all rolled into one Launcher)
+:: Download & installs Prism Launcher (Lightweight, MultiInstance Minecraft Launcher)
+:: Runs MassGraves's Activation Scripts for Windows (Activate Windows)
+::
+:: Self Cleaning
+
+:: This script doesn't
+::
+:: check if files are already downloaded
+:: check if programs are already installed
+:: know if the files its deleting where successfully installed or not
+:: generate DXWebsetup from microsoft's website (i have to self host it cause i cant figure out how to download a fresh file through windows CLI)
+:: generate Ninite for Steam (cant figure out how to generate fresh file from ninites site using windows CLI)
+
+
 title easy prep
 
 cls
@@ -11,13 +32,6 @@ cls
 
 :: downloading files
 
-echo downloading privacy script
-@echo off
-powershell Invoke-WebRequest -Uri https://raw.githubusercontent.com/Smealm/simplesystemprep/main/resources/privacy-script.bat -OutFile privacy-script.bat
-@echo off
-move privacy-script.bat simplesystemprep/
-cls
-
 echo downloading DirectX Web Installer
 @echo off
 powershell Invoke-WebRequest -Uri https://github.com/Smealm/simplesystemprep/raw/main/resources/dxwebsetup.exe -OutFile dxwebsetup.exe
@@ -25,11 +39,11 @@ powershell Invoke-WebRequest -Uri https://github.com/Smealm/simplesystemprep/raw
 move dxwebsetup.exe simplesystemprep/
 cls
 
-echo downloading Steam and MalwareBytes
+echo downloading Steam
 @echo off
-powershell Invoke-WebRequest -Uri https://github.com/Smealm/simplesystemprep/raw/main/resources/Ninite.exe -OutFile ninite.exe
+powershell Invoke-WebRequest -Uri https://ninite.com/steam/ninite.exe -OutFile steam.exe
 @echo off
-move ninite.exe simplesystemprep/
+move Steam.exe simplesystemprep/
 cls
 
 echo downloading Virtual Studio Redistributable
@@ -39,12 +53,23 @@ powershell Invoke-WebRequest -Uri https://rebrand.ly/vcpp -OutFile VisualCppRedi
 move VisualCppRedist_AIO_x86_x64.exe simplesystemprep/
 cls
 
+::downloading files (continued)
+::NOTETOSELF: this section (below) is for static files. change them manually to point to the latest version of the program.
+
 echo downloading Heroic Launcher (Epic Games and GOG)
 @echo off
-powershell Invoke-WebRequest -Uri https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.9.2/Heroic-2.9.2-Setup-x64.exe -OutFile heroic.exe
+powershell Invoke-WebRequest -Uri https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.11.0/Heroic-2.11.0-Setup-x64.exe -OutFile heroic.exe
 @echo off
 move heroic.exe simplesystemprep/
 cls
+
+echo downloading Prism (Minecraft)
+@echo off
+powershell Invoke-WebRequest -Uri https://github.com/PrismLauncher/PrismLauncher/releases/download/8.0/PrismLauncher-Windows-MSVC-Setup-8.0.exe -OutFile prism.exe
+@echo off
+move prism.exe simplesystemprep/
+cls
+
 
 :: running installers
 
@@ -62,11 +87,11 @@ start /w simplesystemprep/dxwebsetup.exe
 del /f /q simplesystemprep\dxwebsetup.exe
 cls
 
-echo installing Steam and MalwareBytes
+echo installing Steam
 @echo off
-start /w simplesystemprep/ninite.exe
+start /w simplesystemprep/steam.exe
 @echo off
-del /f /q simplesystemprep\ninite.exe
+del /f /q simplesystemprep\steam.exe
 cls
 
 echo installing Heroic Launcher (Epic Games and GOG)
@@ -76,17 +101,17 @@ start /w simplesystemprep/heroic.exe
 del /f /q simplesystemprep\heroic.exe
 cls
 
+echo installing Prism (Minecraft)
+@echo off
+start /w simplesystemprep/prism.exe
+@echo off
+del /f /q simplesystemprep\prism.exe
+cls
+
 echo running windows activation script
 @echo off
 echo Initialising
 powershell -c "irm https://massgrave.dev/get | iex"
-cls
-
-echo running privacy script
-@echo off
-start /w simplesystemprep\privacy-script.bat
-@echo off
-del /f /q simplesystemprep\privacy-script.bat
 cls
 
 @echo cleaning up
