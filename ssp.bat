@@ -32,6 +32,13 @@ cls
 
 :: downloading files
 
+echo downloading Virtual Studio Redistributable
+@echo off
+powershell Invoke-WebRequest -Uri https://rebrand.ly/vcpp -OutFile VisualCppRedist_AIO_x86_x64.exe
+@echo off
+move VisualCppRedist_AIO_x86_x64.exe simplesystemprep/
+cls
+
 echo downloading DirectX Web Installer
 @echo off
 powershell Invoke-WebRequest -Uri https://github.com/Smealm/simplesystemprep/raw/main/resources/dxwebsetup.exe -OutFile dxwebsetup.exe
@@ -39,18 +46,29 @@ powershell Invoke-WebRequest -Uri https://github.com/Smealm/simplesystemprep/raw
 move dxwebsetup.exe simplesystemprep/
 cls
 
+echo downloading Spotify + Block the Spot
+@echo off
+powershell Invoke-WebRequest -Uri https://ninite.com/spotify/ninite.exe -OutFile spotify.exe
+@echo off
+move spotify.exe simplesystemprep/
+cls
+
+echo downloading Discord + Vencord
+@echo off
+powershell Invoke-WebRequest -Uri https://ninite.com/discord/ninite.exe -OutFile discord.exe
+@echo off
+powershell Invoke-WebRequest -Uri https://github.com/Vencord/Installer/releases/latest/download/VencordInstaller.exe -OutFile vencord.exe
+@echo off
+move discord.exe simplesystemprep/
+@echo off
+move vencord.exe simplesystemprep/
+cls
+
 echo downloading Steam
 @echo off
 powershell Invoke-WebRequest -Uri https://ninite.com/steam/ninite.exe -OutFile steam.exe
 @echo off
 move Steam.exe simplesystemprep/
-cls
-
-echo downloading Virtual Studio Redistributable
-@echo off
-powershell Invoke-WebRequest -Uri https://rebrand.ly/vcpp -OutFile VisualCppRedist_AIO_x86_x64.exe
-@echo off
-move VisualCppRedist_AIO_x86_x64.exe simplesystemprep/
 cls
 
 ::downloading files (continued)
@@ -92,6 +110,27 @@ echo installing Steam
 start /w simplesystemprep/steam.exe
 @echo off
 del /f /q simplesystemprep\steam.exe
+cls
+
+echo installing Discord + Vencord
+@echo off
+start /w simplesystemprep/discord.exe
+@echo off
+del /f /q simplesystemprep\discord.exe
+@echo off
+start /w simplesystemprep/vencord.exe
+@echo off
+del /f /q simplesystemprep\vencord.exe
+cls
+
+echo installing Spotify + Block the Spot
+@echo off
+start /w simplesystemprep/spotify.exe
+@echo off
+del /f /q simplesystemprep\spotify.exe
+@echo off
+echo Initialising
+powershell -c [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-Expression "& { $(Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/mrpond/BlockTheSpot/master/install.ps1') } -UninstallSpotifyStoreEdition -UpdateSpotify"
 cls
 
 echo installing Heroic Launcher (Epic Games and GOG)
