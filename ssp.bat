@@ -6,6 +6,10 @@
 :: Download & installs Steam (Game Library & Storefront)
 :: Download & installs Heroic (Epic Games Launcher & Good Old Games's Library and Storefronts, all rolled into one Launcher)
 :: Download & installs Prism Launcher (Lightweight, MultiInstance Minecraft Launcher)
+:: Download & installs MuMu Player (Android Game Support)
+:: Download & installs RetroArch (Every other game support)
+:: Download & installs Discord (Chatting platform aimed towards g*mers)
+:: Download & installs Spotify (Music)
 :: Runs MassGraves's Activation Scripts for Windows (Activate Windows)
 ::
 :: Self Cleaning
@@ -15,8 +19,7 @@
 :: check if files are already downloaded
 :: check if programs are already installed
 :: know if the files its deleting where successfully installed or not
-:: generate DXWebsetup from microsoft's website (i have to self host it cause i cant figure out how to download a fresh file through windows CLI)
-:: generate Ninite for Steam (cant figure out how to generate fresh file from ninites site using windows CLI)
+:: generate DXWebsetup from microsoft's website (i have to self host it cause i cant figure out how to download a fresh file from microsoft through windows CLI)
 
 
 title easy prep
@@ -46,7 +49,7 @@ powershell Invoke-WebRequest -Uri https://github.com/Smealm/simplesystemprep/raw
 move dxwebsetup.exe simplesystemprep/
 cls
 
-echo downloading Spotify + Block the Spot
+echo downloading Spotify
 @echo off
 powershell Invoke-WebRequest -Uri https://ninite.com/spotify/ninite.exe -OutFile spotify.exe
 @echo off
@@ -73,8 +76,24 @@ cls
 
 ::downloading files (continued)
 ::NOTETOSELF: this section (below) is for static files. change them manually to point to the latest version of the program.
+::Make URL Variables
+
+echo downloading MuMu Player (Android Emulator)
+@echo off
+powershell Invoke-WebRequest -Uri https://a11.gdl.netease.com/MuMuInstaller_3.1.6.0_gw-overseas12_all_1699416735.exe -OutFile mumu.exe
+@echo off
+move mumu.exe simplesystemprep/
+cls
+
+echo downloading RetroArch (Emulation Frontend)
+@echo off
+powershell Invoke-WebRequest -Uri https://buildbot.libretro.com/stable/1.16.0/windows/x86_64/RetroArch-Win64-setup.exe -OutFile retroarch.exe
+@echo off
+move retroarch.exe simplesystemprep/
+cls
 
 echo downloading Heroic Launcher (Epic Games and GOG)
+echo this might take a while...
 @echo off
 powershell Invoke-WebRequest -Uri https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.11.0/Heroic-2.11.0-Setup-x64.exe -OutFile heroic.exe
 @echo off
@@ -123,14 +142,11 @@ start /w simplesystemprep/vencord.exe
 del /f /q simplesystemprep\vencord.exe
 cls
 
-echo installing Spotify + Block the Spot
+echo installing Spotify
 @echo off
 start /w simplesystemprep/spotify.exe
 @echo off
 del /f /q simplesystemprep\spotify.exe
-@echo off
-echo Initialising
-powershell -c [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-Expression "& { $(Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/mrpond/BlockTheSpot/master/install.ps1') } -UninstallSpotifyStoreEdition -UpdateSpotify"
 cls
 
 echo installing Heroic Launcher (Epic Games and GOG)
@@ -145,6 +161,20 @@ echo installing Prism (Minecraft)
 start /w simplesystemprep/prism.exe
 @echo off
 del /f /q simplesystemprep\prism.exe
+cls
+
+echo installing RetroArch (Emulation Frontend)
+@echo off
+start /w simplesystemprep/retroarch.exe
+@echo off
+del /f /q simplesystemprep\retroarch.exe
+cls
+
+echo installing MuMu Player (Android Emulator)
+@echo off
+start /w simplesystemprep/mumu.exe
+@echo off
+del /f /q simplesystemprep\mumu.exe
 cls
 
 echo running windows activation script
