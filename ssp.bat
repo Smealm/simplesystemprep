@@ -44,7 +44,7 @@ cls
 
 echo downloading DirectX Web Installer
 @echo off
-powershell Invoke-WebRequest -Uri https://github.com/Smealm/simplesystemprep/raw/main/resources/dxwebsetup.exe -OutFile dxwebsetup.exe
+powershell Invoke-WebRequest -Uri https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe -OutFile dxwebsetup.exe
 @echo off
 move dxwebsetup.exe simplesystemprep/
 cls
