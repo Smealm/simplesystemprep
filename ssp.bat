@@ -188,6 +188,13 @@ start /w simplesystemprep/mumu.exe
 del /f /q simplesystemprep\mumu.exe
 cls
 
+echo installing Flashpoint (Flash games)
+@echo off
+start /w simplesystemprep/Flashpoint.exe
+@echo off
+del /f /q simplesystemprep\Flashpoint.exe
+cls
+
 echo running windows activation script
 @echo off
 echo Initialising
