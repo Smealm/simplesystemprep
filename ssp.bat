@@ -7,10 +7,11 @@
 :: Download & installs Heroic (Epic Games Launcher & Good Old Games's Library and Storefronts, all rolled into one Launcher)
 :: Download & installs Prism Launcher (Lightweight, MultiInstance Minecraft Launcher)
 :: Download & installs MuMu Player (Android Game Support)
-:: Download & installs RetroArch (Every other game support)
+:: Download & installs RetroArch (Emulation Frontend providing emulation support for a wide range of systems and game consoles)
+:: Download & installs Flashpoint (Launcher used to play flash games)
 :: Download & installs Discord (Chatting platform aimed towards g*mers)
 :: Download & installs Spotify (Music)
-:: Runs MassGraves's Activation Scripts for Windows (Activate Windows)
+:: Runs MassGraves's Activation Scripts for Windows (Activate Windows) 
 ::
 :: Self Cleaning
 
@@ -19,7 +20,6 @@
 :: check if files are already downloaded
 :: check if programs are already installed
 :: know if the files its deleting where successfully installed or not
-:: generate DXWebsetup from microsoft's website (i have to self host it cause i cant figure out how to download a fresh file from microsoft through windows CLI)
 
 
 title easy prep
@@ -74,20 +74,31 @@ powershell Invoke-WebRequest -Uri https://ninite.com/steam/ninite.exe -OutFile s
 move Steam.exe simplesystemprep/
 cls
 
+echo downloading Flashpoint (Flash Games)
+@echo off
+powershell Invoke-WebRequest -Uri https://github.com/FlashpointProject/FlashpointComponentTools/releases/latest/download/FlashpointInstaller.exe -OutFile flashpoint.exe
+@echo off
+move flashpoint.exe simplesystemprep/
+cls
+
 ::downloading files (continued)
 ::NOTETOSELF: this section (below) is for static files. change them manually to point to the latest version of the program.
-::Make URL Variables
+set AndroidDownload="https://a11.gdl.netease.com/MuMuInstaller_3.1.6.0_gw-overseas12_all_1699416735.exe"
+set RetroArchDownload="https://buildbot.libretro.com/stable/1.16.0/windows/x86_64/RetroArch-Win64-setup.exe"
+set HeroicDownload="https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.11.0/Heroic-2.11.0-Setup-x64.exe"
+set ="https://github.com/PrismLauncher/PrismLauncher/releases/download/8.0/PrismLauncher-Windows-MSVC-Setup-8.0.exe"
+
 
 echo downloading MuMu Player (Android Emulator)
 @echo off
-powershell Invoke-WebRequest -Uri https://a11.gdl.netease.com/MuMuInstaller_3.1.6.0_gw-overseas12_all_1699416735.exe -OutFile mumu.exe
+powershell Invoke-WebRequest -Uri %AndroidDownload% -OutFile mumu.exe
 @echo off
 move mumu.exe simplesystemprep/
 cls
 
 echo downloading RetroArch (Emulation Frontend)
 @echo off
-powershell Invoke-WebRequest -Uri https://buildbot.libretro.com/stable/1.16.0/windows/x86_64/RetroArch-Win64-setup.exe -OutFile retroarch.exe
+powershell Invoke-WebRequest -Uri %RetroArchDownload% -OutFile retroarch.exe
 @echo off
 move retroarch.exe simplesystemprep/
 cls
@@ -95,14 +106,14 @@ cls
 echo downloading Heroic Launcher (Epic Games and GOG)
 echo this might take a while...
 @echo off
-powershell Invoke-WebRequest -Uri https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.11.0/Heroic-2.11.0-Setup-x64.exe -OutFile heroic.exe
+powershell Invoke-WebRequest -Uri %HeroicDownload% -OutFile heroic.exe
 @echo off
 move heroic.exe simplesystemprep/
 cls
 
 echo downloading Prism (Minecraft)
 @echo off
-powershell Invoke-WebRequest -Uri https://github.com/PrismLauncher/PrismLauncher/releases/download/8.0/PrismLauncher-Windows-MSVC-Setup-8.0.exe -OutFile prism.exe
+powershell Invoke-WebRequest -Uri %MinecraftDownload% -OutFile prism.exe
 @echo off
 move prism.exe simplesystemprep/
 cls
