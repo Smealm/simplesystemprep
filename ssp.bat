@@ -1,4 +1,3 @@
-
 :: This script does
 :: 
 :: Download & installs DirectX (Game Compatiblity)
@@ -26,60 +25,65 @@ title easy prep
 
 cls
 
-:: creating temp folder
+:: creating temp folder(s)
+set ExecuteableDir="simplesystemprep\executeable\"
+set ArchiveDir="simplesystemprep\archives\"
 
-echo creating folder
+echo creating folder(s)
 @echo off
-mkdir simplesystemprep
+mkdir simplesystemprep\archives
+mkdir simplesystemprep\executeable
 cls
 
 :: downloading files
 
-echo downloading Virtual Studio Redistributable
-@echo off
-powershell Invoke-WebRequest -Uri https://rebrand.ly/vcpp -OutFile VisualCppRedist_AIO_x86_x64.exe
-@echo off
-move VisualCppRedist_AIO_x86_x64.exe simplesystemprep/
-cls
-
 echo downloading DirectX Web Installer
 @echo off
-powershell Invoke-WebRequest -Uri https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe -OutFile dxwebsetup.exe
-@echo off
-move dxwebsetup.exe simplesystemprep/
+curl.exe -fSLo dxwebsetup.exe https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe
 cls
 
 echo downloading Spotify
 @echo off
-powershell Invoke-WebRequest -Uri https://ninite.com/spotify/ninite.exe -OutFile spotify.exe
-@echo off
-move spotify.exe simplesystemprep/
+curl.exe -fSLo spotify.exe https://ninite.com/spotify/ninite.exe
 cls
 
 echo downloading Discord + Vencord
 @echo off
-powershell Invoke-WebRequest -Uri https://ninite.com/discord/ninite.exe -OutFile discord.exe
+curl.exe -fSLo discord.exe https://ninite.com/discord/ninite.exe
 @echo off
-powershell Invoke-WebRequest -Uri https://github.com/Vencord/Installer/releases/latest/download/VencordInstaller.exe -OutFile vencord.exe
+curl.exe -fSLo vencord.exe https://github.com/Vencord/Installer/releases/latest/download/VencordInstaller.exe
 @echo off
-move discord.exe simplesystemprep/
+move discord.exe %ExecuteableDir%
 @echo off
-move vencord.exe simplesystemprep/
+move dxwebsetup.exe %ExecuteableDir%
+@echo off
+move spotify.exe %ExecuteableDir%
 cls
 
 echo downloading Steam
 @echo off
-powershell Invoke-WebRequest -Uri https://ninite.com/steam/ninite.exe -OutFile steam.exe
+curl.exe -fSLo steam.exe https://ninite.com/steam/ninite.exe
+cls
+
+echo downloading Virtual Studio Redistributable
 @echo off
-move Steam.exe simplesystemprep/
+curl.exe -fSLo VisualCppRedistAIO.exe https://rebrand.ly/vcpp
+@echo off
+move Steam.exe %ExecuteableDir%
+@echo off
+move vencord.exe %ExecuteableDir%
 cls
 
 echo downloading Flashpoint (Flash Games)
 @echo off
-powershell Invoke-WebRequest -Uri https://github.com/FlashpointProject/FlashpointComponentTools/releases/latest/download/FlashpointInstaller.exe -OutFile flashpoint.exe
+curl.exe -fSLo flashpoint.exe https://github.com/FlashpointProject/FlashpointComponentTools/releases/latest/download/FlashpointInstaller.exe
 @echo off
-move flashpoint.exe simplesystemprep/
+move flashpoint.exe %ExecuteableDir%
+@echo off
+move  VisualCppRedistAIO.exe %ExecuteableDir%
 cls
+
+
 
 ::downloading files (continued)
 ::NOTETOSELF: this section (below) is for static files. change them manually to point to the latest version of the program.
@@ -91,108 +95,122 @@ set MinecraftDownload="https://github.com/PrismLauncher/PrismLauncher/releases/d
 
 echo downloading MuMu Player (Android Emulator)
 @echo off
-powershell Invoke-WebRequest -Uri %AndroidDownload% -OutFile mumu.exe
-@echo off
-move mumu.exe simplesystemprep/
+curl.exe -fSLo mumu.exe %AndroidDownload%
 cls
 
 echo downloading RetroArch (Emulation Frontend)
 @echo off
-powershell Invoke-WebRequest -Uri %RetroArchDownload% -OutFile retroarch.exe
+curl.exe -fSLo retroarch.exe %RetroArchDownload%
 @echo off
-move retroarch.exe simplesystemprep/
+move mumu.exe %ExecuteableDir%
+@echo off
+move retroarch.exe %ExecuteableDir%
 cls
 
 echo downloading Heroic Launcher (Epic Games and GOG)
 echo this might take a while...
 @echo off
-powershell Invoke-WebRequest -Uri %HeroicDownload% -OutFile heroic.exe
+curl.exe -fSLo heroic.exe %HeroicDownload%
 @echo off
-move heroic.exe simplesystemprep/
+move heroic.exe %ExecuteableDir%
 cls
 
 echo downloading Prism (Minecraft)
 @echo off
-powershell Invoke-WebRequest -Uri %MinecraftDownload% -OutFile prism.exe
+curl.exe -fSLo prism.exe %MinecraftDownload% 
 @echo off
-move prism.exe simplesystemprep/
+move prism.exe %ExecuteableDir%
 cls
 
+:: Moving
+
+
+
+
+
+
+
+
+
+
+
+
+pause
 
 :: running installers
 
 echo installing Virtual Studio Redistributable
 @echo off
-start /w simplesystemprep/VisualCppRedist_AIO_x86_x64.exe
+start /w simplesystemprep/executeable/VisualCppRedistAIO.exe
 @echo off
-del /f /q simplesystemprep\VisualCppRedist_AIO_x86_x64.exe
+del /f /q simplesystemprep\executeable\VisualCppRedistAIO.exe
 cls
 
 echo installing DirectX
 @echo off
-start /w simplesystemprep/dxwebsetup.exe
+start /w simplesystemprep/executeable/dxwebsetup.exe
 @echo off
-del /f /q simplesystemprep\dxwebsetup.exe
+del /f /q simplesystemprep\executeable\dxwebsetup.exe
 cls
 
 echo installing Steam
 @echo off
-start /w simplesystemprep/steam.exe
+start /w simplesystemprep/executeable/steam.exe
 @echo off
-del /f /q simplesystemprep\steam.exe
+del /f /q simplesystemprep\executeable\steam.exe
 cls
 
 echo installing Discord + Vencord
 @echo off
-start /w simplesystemprep/discord.exe
+start /w simplesystemprep/executeable/discord.exe
 @echo off
-del /f /q simplesystemprep\discord.exe
+del /f /q simplesystemprep\executeable\discord.exe
 @echo off
-start /w simplesystemprep/vencord.exe
+start /w simplesystemprep/executeable/vencord.exe
 @echo off
-del /f /q simplesystemprep\vencord.exe
+del /f /q simplesystemprep\executeable\vencord.exe
 cls
 
 echo installing Spotify
 @echo off
-start /w simplesystemprep/spotify.exe
+start /w simplesystemprep/executeable/spotify.exe
 @echo off
-del /f /q simplesystemprep\spotify.exe
+del /f /q simplesystemprep\executeable\spotify.exe
 cls
 
-echo installing Heroic Launcher (Epic Games and GOG)
+echo installing Heroic Launcher (Epic Games and GOG) + Claimer
 @echo off
-start /w simplesystemprep/heroic.exe
+start /w simplesystemprep/executeable/heroic.exe
 @echo off
-del /f /q simplesystemprep\heroic.exe
+del /f /q simplesystemprep\executeable\heroic.exe
 cls
 
 echo installing Prism (Minecraft)
 @echo off
-start /w simplesystemprep/prism.exe
+start /w simplesystemprep/executeable/prism.exe
 @echo off
-del /f /q simplesystemprep\prism.exe
+del /f /q simplesystemprep\executeable\prism.exe
 cls
 
 echo installing RetroArch (Emulation Frontend)
 @echo off
-start /w simplesystemprep/retroarch.exe
+start /w simplesystemprep/executeable/retroarch.exe
 @echo off
-del /f /q simplesystemprep\retroarch.exe
+del /f /q simplesystemprep\executeable\retroarch.exe
 cls
 
 echo installing MuMu Player (Android Emulator)
 @echo off
-start /w simplesystemprep/mumu.exe
+start /w simplesystemprep/executeable/mumu.exe
 @echo off
-del /f /q simplesystemprep\mumu.exe
+del /f /q simplesystemprep\executeable\mumu.exe
 cls
 
 echo installing Flashpoint (Flash games)
 @echo off
-start /w simplesystemprep/Flashpoint.exe
+start /w simplesystemprep/executeable/Flashpoint.exe
 @echo off
-del /f /q simplesystemprep\Flashpoint.exe
+del /f /q simplesystemprep\executeable\Flashpoint.exe
 cls
 
 echo running windows activation script
