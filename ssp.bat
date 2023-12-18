@@ -122,21 +122,6 @@ curl.exe -fSLo prism.exe %MinecraftDownload%
 move prism.exe %ExecuteableDir%
 cls
 
-:: Moving
-
-
-
-
-
-
-
-
-
-
-
-
-pause
-
 :: running installers
 
 echo installing Virtual Studio Redistributable
