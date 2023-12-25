@@ -74,7 +74,7 @@ cls
 
 echo downloading UltimMC
 @echo off
-curl.exe -fSLo UltimMC.exe https://nightly.link/UltimMC/Launcher/workflows/main/develop/mmc-cracked-win32.zip
+curl.exe -fSLo UltimMC.zip https://nightly.link/UltimMC/Launcher/workflows/main/develop/mmc-cracked-win32.zip
 @echo off
 move Steam.exe %ExecuteableDir%
 @echo off
@@ -98,7 +98,7 @@ cls
 
 @echo off
 move  VisualCppRedistAIO.exe %ExecuteableDir%
-move  UltimMC.exe %ExecuteableDir%
+move  UltimMC.zip %ArchiveDir%
 echo installing Virtual Studio Redistributable
 @echo off
 start /w simplesystemprep/executeable/VisualCppRedistAIO.exe
