@@ -4,10 +4,7 @@
 :: Download & installs VCRedist 2005-2023 x86 & x64 (Game Compatiblity)
 :: Download & installs Steam (Game Library & Storefront)
 :: Download & installs Heroic (Epic Games Launcher & Good Old Games's Library and Storefronts, all rolled into one Launcher)
-:: Download & installs Prism Launcher (Lightweight, MultiInstance Minecraft Launcher)
-:: Download & installs MuMu Player (Android Game Support)
-:: Download & installs RetroArch (Emulation Frontend providing emulation support for a wide range of systems and game consoles)
-:: Download & installs Flashpoint (Launcher used to play flash games)
+:: Download & installs UltimMC Launcher (Lightweight, MultiInstance Minecraft Launcher)
 :: Download & installs Discord (Chatting platform aimed towards g*mers)
 :: Download & installs Spotify (Music)
 :: Runs MassGraves's Activation Scripts for Windows (Activate Windows) 
@@ -75,6 +72,15 @@ move vencord.exe %ExecuteableDir%
 cls
 
 
+echo downloading UltimMC
+@echo off
+curl.exe -fSLo UltimMC.exe https://nightly.link/UltimMC/Launcher/workflows/main/develop/mmc-cracked-win32.zip
+@echo off
+move Steam.exe %ExecuteableDir%
+@echo off
+move vencord.exe %ExecuteableDir%
+cls
+
 
 ::downloading files (continued)
 ::NOTETOSELF: this section (below) is for static files. change them manually to point to the latest version of the program.
@@ -92,6 +98,7 @@ cls
 
 @echo off
 move  VisualCppRedistAIO.exe %ExecuteableDir%
+move  UltimMC.exe %ExecuteableDir%
 echo installing Virtual Studio Redistributable
 @echo off
 start /w simplesystemprep/executeable/VisualCppRedistAIO.exe
@@ -132,11 +139,18 @@ start /w simplesystemprep/executeable/spotify.exe
 del /f /q simplesystemprep\executeable\spotify.exe
 cls
 
-echo installing Heroic Launcher (Epic Games and GOG) + Claimer
+echo installing Heroic Launcher (Epic Games and GOG)
 @echo off
 start /w simplesystemprep/executeable/heroic.exe
 @echo off
 del /f /q simplesystemprep\executeable\heroic.exe
+cls
+
+echo installing UltimMC
+@echo off
+start /w simplesystemprep/executeable/UltimMC.exe
+@echo off
+del /f /q simplesystemprep\executeable\UltimMC.exe
 cls
 
 echo running windows activation script
