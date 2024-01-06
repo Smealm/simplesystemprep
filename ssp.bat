@@ -1,7 +1,7 @@
 :: This script does
 :: 
 :: Download & installs DirectX (Game Compatiblity)
-:: Download & installs VCRedist 2005-2023 x86 & x64 (Game Compatiblity)
+:: Download & installs VCRedist 2005-2024 x86 & x64 (Game Compatiblity)
 :: Download & installs Steam (Game Library & Storefront)
 :: Download & installs Heroic (Epic Games Launcher & Good Old Games's Library and Storefronts, all rolled into one Launcher)
 :: Download & installs Prism Launcher (Lightweight, MultiInstance Minecraft Launcher)
