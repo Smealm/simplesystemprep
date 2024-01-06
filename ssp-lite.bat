@@ -37,11 +37,19 @@ cls
 echo downloading DirectX Web Installer
 @echo off
 curl.exe -fSLo dxwebsetup.exe https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe
+@echo off
+timeout /t 3
+@echo off
+move dxwebsetup.exe %ExecuteableDir%
 cls
 
 echo downloading Spotify
 @echo off
 curl.exe -fSLo spotify.exe https://ninite.com/spotify/ninite.exe
+@echo off
+timeout /t 3
+@echo off
+move spotify.exe %ExecuteableDir%
 cls
 
 echo downloading Discord + Vencord
@@ -50,35 +58,30 @@ curl.exe -fSLo discord.exe https://ninite.com/discord/ninite.exe
 @echo off
 curl.exe -fSLo vencord.exe https://github.com/Vencord/Installer/releases/latest/download/VencordInstaller.exe
 @echo off
+timeout /t 3
+@echo off
 move discord.exe %ExecuteableDir%
 @echo off
-move dxwebsetup.exe %ExecuteableDir%
-@echo off
-move spotify.exe %ExecuteableDir%
+move vencord.exe %ExecuteableDir%
 cls
 
 echo downloading Steam
 @echo off
 curl.exe -fSLo steam.exe https://ninite.com/steam/ninite.exe
+@echo off
+timeout /t 3
+@echo off
+move Steam.exe %ExecuteableDir%
 cls
+
 
 echo downloading Virtual Studio Redistributable
 @echo off
 curl.exe -fSLo VisualCppRedistAIO.exe https://rebrand.ly/vcpp
 @echo off
-move Steam.exe %ExecuteableDir%
+timeout /t 3
 @echo off
-move vencord.exe %ExecuteableDir%
-cls
-
-
-echo downloading UltimMC
-@echo off
-curl.exe -fSLo UltimMC.zip https://nightly.link/UltimMC/Launcher/workflows/main/develop/mmc-cracked-win32.zip
-@echo off
-move Steam.exe %ExecuteableDir%
-@echo off
-move vencord.exe %ExecuteableDir%
+move  VisualCppRedistAIO.exe %ExecuteableDir%
 cls
 
 
@@ -91,14 +94,14 @@ echo this might take a while...
 @echo off
 curl.exe -fSLo heroic.exe %HeroicDownload%
 @echo off
+timeout /t 3
+@echo off
 move heroic.exe %ExecuteableDir%
 cls
 
 :: running installers
 
 @echo off
-move  VisualCppRedistAIO.exe %ExecuteableDir%
-move  UltimMC.zip %ArchiveDir%
 echo installing Virtual Studio Redistributable
 @echo off
 start /w simplesystemprep/executeable/VisualCppRedistAIO.exe
@@ -144,13 +147,6 @@ echo installing Heroic Launcher (Epic Games and GOG)
 start /w simplesystemprep/executeable/heroic.exe
 @echo off
 del /f /q simplesystemprep\executeable\heroic.exe
-cls
-
-echo installing UltimMC
-@echo off
-start /w simplesystemprep/executeable/UltimMC.exe
-@echo off
-del /f /q simplesystemprep\executeable\UltimMC.exe
 cls
 
 echo running windows activation script
