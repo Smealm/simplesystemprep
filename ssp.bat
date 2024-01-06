@@ -7,6 +7,7 @@
 :: Download & installs Prism Launcher (Lightweight, MultiInstance Minecraft Launcher)
 :: Download & installs MuMu Player (Android Game Support)
 :: Download & installs RetroArch (Emulation Frontend providing emulation support for a wide range of systems and game consoles)
+:: Download & installs Yuzu (Switch Game Support)
 :: Download & installs Flashpoint (Launcher used to play flash games)
 :: Download & installs Discord (Chatting platform aimed towards g*mers)
 :: Download & installs Spotify (Music)
@@ -40,11 +41,19 @@ cls
 echo downloading DirectX Web Installer
 @echo off
 curl.exe -fSLo dxwebsetup.exe https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe
+@echo off
+timeout /t 2
+@echo off
+move dxwebsetup.exe %ExecuteableDir%
 cls
 
 echo downloading Spotify
 @echo off
 curl.exe -fSLo spotify.exe https://ninite.com/spotify/ninite.exe
+@echo off
+timeout /t 2
+@echo off
+move spotify.exe %ExecuteableDir%
 cls
 
 echo downloading Discord + Vencord
@@ -53,56 +62,73 @@ curl.exe -fSLo discord.exe https://ninite.com/discord/ninite.exe
 @echo off
 curl.exe -fSLo vencord.exe https://github.com/Vencord/Installer/releases/latest/download/VencordInstaller.exe
 @echo off
+timeout /t 2
+@echo off
 move discord.exe %ExecuteableDir%
 @echo off
-move dxwebsetup.exe %ExecuteableDir%
-@echo off
-move spotify.exe %ExecuteableDir%
+move vencord.exe %ExecuteableDir%
 cls
 
 echo downloading Steam
 @echo off
 curl.exe -fSLo steam.exe https://ninite.com/steam/ninite.exe
+@echo off
+timeout /t 2
+@echo off
+move Steam.exe %ExecuteableDir%
 cls
 
 echo downloading Virtual Studio Redistributable
 @echo off
 curl.exe -fSLo VisualCppRedistAIO.exe https://rebrand.ly/vcpp
 @echo off
-move Steam.exe %ExecuteableDir%
+timeout /t 2
 @echo off
-move vencord.exe %ExecuteableDir%
+move  VisualCppRedistAIO.exe %ExecuteableDir%
 cls
 
 echo downloading Flashpoint (Flash Games)
 @echo off
 curl.exe -fSLo flashpoint.exe https://github.com/FlashpointProject/FlashpointComponentTools/releases/latest/download/FlashpointInstaller.exe
 @echo off
-move flashpoint.exe %ExecuteableDir%
+timeout /t 2
 @echo off
-move  VisualCppRedistAIO.exe %ExecuteableDir%
+move flashpoint.exe %ExecuteableDir%
 cls
 
 
 
 ::downloading files (continued)
 ::NOTETOSELF: this section (below) is for static files. change them manually to point to the latest version of the program.
+set YuzuSwitch="yuzu.exe https://github.com/yuzu-emu/liftinstall/releases/download/1.9/yuzu_install.exe"
 set AndroidDownload="https://a11.gdl.netease.com/MuMuInstaller_3.1.6.0_gw-overseas12_all_1699416735.exe"
 set RetroArchDownload="https://buildbot.libretro.com/stable/1.16.0/windows/x86_64/RetroArch-Win64-setup.exe"
 set HeroicDownload="https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.11.0/Heroic-2.11.0-Setup-x64.exe"
 set MinecraftDownload="https://github.com/PrismLauncher/PrismLauncher/releases/download/8.0/PrismLauncher-Windows-MSVC-Setup-8.0.exe"
 
+echo downloading Yuzu (Nintendo Switch Emulator)
+@echo off
+curl.exe -fSLo yuzu.exe https://github.com/yuzu-emu/liftinstall/releases/download/1.9/yuzu_install.exe
+@echo off
+timeout /t 2
+@echo off
+move yuzu.exe %ExecuteableDir%
+cls
 
 echo downloading MuMu Player (Android Emulator)
 @echo off
 curl.exe -fSLo mumu.exe %AndroidDownload%
+@echo off
+timeout /t 2
+@echo off
+move mumu.exe %ExecuteableDir%
 cls
 
 echo downloading RetroArch (Emulation Frontend)
 @echo off
 curl.exe -fSLo retroarch.exe %RetroArchDownload%
 @echo off
-move mumu.exe %ExecuteableDir%
+timeout /t 2
 @echo off
 move retroarch.exe %ExecuteableDir%
 cls
@@ -112,12 +138,16 @@ echo this might take a while...
 @echo off
 curl.exe -fSLo heroic.exe %HeroicDownload%
 @echo off
+timeout /t 2
+@echo off
 move heroic.exe %ExecuteableDir%
 cls
 
 echo downloading Prism (Minecraft)
 @echo off
 curl.exe -fSLo prism.exe %MinecraftDownload% 
+@echo off
+timeout /t 2
 @echo off
 move prism.exe %ExecuteableDir%
 cls
@@ -189,6 +219,13 @@ echo installing MuMu Player (Android Emulator)
 start /w simplesystemprep/executeable/mumu.exe
 @echo off
 del /f /q simplesystemprep\executeable\mumu.exe
+cls
+
+echo installing Yuzu (Nintendo Switch Emulator)
+@echo off
+start /w simplesystemprep/executeable/yuzu.exe
+@echo off
+del /f /q simplesystemprep\executeable\yuzu.exe
 cls
 
 echo installing Flashpoint (Flash games)
