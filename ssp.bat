@@ -7,7 +7,8 @@
 :: Download & installs Prism Launcher (Lightweight, MultiInstance Minecraft Launcher)
 :: Download & installs MuMu Player (Android Game Support)
 :: Download & installs RetroArch (Emulation Frontend providing emulation support for a wide range of systems and game consoles)
-:: Download & installs Yuzu (Switch Game Support)
+:: Download & installs Ryujinx (Switch Game Support)
+:: Download & installs RyuSAK (Provides Ryujinx with Shader caches, Production keys & Firmware)
 :: Download & installs Flashpoint (Launcher used to play flash games)
 :: Download & installs Discord (Chatting platform aimed towards g*mers)
 :: Download & installs Spotify (Music)
@@ -100,19 +101,37 @@ cls
 
 ::downloading files (continued)
 ::NOTETOSELF: this section (below) is for static files. change them manually to point to the latest version of the program.
-set YuzuSwitch="yuzu.exe https://github.com/yuzu-emu/liftinstall/releases/download/1.9/yuzu_install.exe"
+:: -1(a)
+set RyuSAK_Switch="https://github.com/FennyFatal/RyuSAK/releases/download/v1.6.3-experimental/RyuSAK-1.6.3.Setup.exe"
+:: -1(b)
+set Ryujinx_Switch="https://github.com/Ryujinx/release-channel-master/releases/download/1.1.1106/ryujinx-1.1.1106-win_x64.zip"
+:: -2
 set AndroidDownload="https://a11.gdl.netease.com/MuMuInstaller_3.1.6.0_gw-overseas12_all_1699416735.exe"
+:: -3
 set RetroArchDownload="https://buildbot.libretro.com/stable/1.16.0/windows/x86_64/RetroArch-Win64-setup.exe"
+:: -4
 set HeroicDownload="https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.11.0/Heroic-2.11.0-Setup-x64.exe"
+:: -5
 set MinecraftDownload="https://github.com/PrismLauncher/PrismLauncher/releases/download/8.0/PrismLauncher-Windows-MSVC-Setup-8.0.exe"
 
-echo downloading Yuzu (Nintendo Switch Emulator)
+
+
+echo downloading Ryujinx (Switch Emulator)
 @echo off
-curl.exe -fSLo yuzu.exe https://github.com/yuzu-emu/liftinstall/releases/download/1.9/yuzu_install.exe
+curl.exe -fSLo ryujinx.exe %Ryujinx_Switch%
 @echo off
 timeout /t 2
 @echo off
-move yuzu.exe %ExecuteableDir%
+move ryujinx.exe %ExecuteableDir%
+cls
+
+echo downloading RyuSAK (Switch Dependencies)
+@echo off
+curl.exe -fSLo ryusak.exe %RyuSAK_Switch%
+@echo off
+timeout /t 2
+@echo off
+move ryusak.exe %ExecuteableDir%
 cls
 
 echo downloading MuMu Player (Android Emulator)
@@ -221,11 +240,18 @@ start /w simplesystemprep/executeable/mumu.exe
 del /f /q simplesystemprep\executeable\mumu.exe
 cls
 
-echo installing Yuzu (Nintendo Switch Emulator)
+echo installing RyuSAK (Nintendo Switch Dependencies)
 @echo off
-start /w simplesystemprep/executeable/yuzu.exe
+start /w simplesystemprep/executeable/ryusak.exe
 @echo off
-del /f /q simplesystemprep\executeable\yuzu.exe
+del /f /q simplesystemprep\executeable\ryusak.exe
+cls
+
+echo installing Ryujinx (Nintendo Switch Emulator)
+@echo off
+start /w simplesystemprep/executeable/ryujinx.exe
+@echo off
+del /f /q simplesystemprep\executeable\ryujinx.exe
 cls
 
 echo installing Flashpoint (Flash games)
