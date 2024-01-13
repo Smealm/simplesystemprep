@@ -101,17 +101,17 @@ cls
 
 ::downloading files (continued)
 ::NOTETOSELF: this section (below) is for static files. change them manually to point to the latest version of the program.
-:: -1(a)
+:: -1(a) RyuSAK
 set RyuSAK_Switch="https://github.com/FennyFatal/RyuSAK/releases/download/v1.6.3-experimental/RyuSAK-1.6.3.Setup.exe"
-:: -1(b)
+:: -1(b) Ryujinx
 set Ryujinx_Switch="https://github.com/Ryujinx/release-channel-master/releases/download/1.1.1106/ryujinx-1.1.1106-win_x64.zip"
-:: -2
+:: -2 MuMu
 set AndroidDownload="https://a11.gdl.netease.com/MuMuInstaller_3.1.6.0_gw-overseas12_all_1699416735.exe"
-:: -3
+:: -3 RetroArch
 set RetroArchDownload="https://buildbot.libretro.com/stable/1.16.0/windows/x86_64/RetroArch-Win64-setup.exe"
-:: -4
+:: -4 Heroic Games Launcher
 set HeroicDownload="https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.11.0/Heroic-2.11.0-Setup-x64.exe"
-:: -5
+:: -5 Prism Launcher
 set MinecraftDownload="https://github.com/PrismLauncher/PrismLauncher/releases/download/8.0/PrismLauncher-Windows-MSVC-Setup-8.0.exe"
 
 
