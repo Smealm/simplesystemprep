@@ -118,11 +118,11 @@ set MinecraftDownload="https://github.com/PrismLauncher/PrismLauncher/releases/d
 
 echo downloading Ryujinx (Switch Emulator)
 @echo off
-curl.exe -fSLo ryujinx.exe %Ryujinx_Switch%
+curl.exe -fSLo ryujinx.zip %Ryujinx_Switch%
 @echo off
 timeout /t 2
 @echo off
-move ryujinx.exe %ExecuteableDir%
+move ryujinx.exe %ArchiveDir%
 cls
 
 echo downloading RyuSAK (Switch Dependencies)
@@ -248,10 +248,8 @@ del /f /q simplesystemprep\executeable\ryusak.exe
 cls
 
 echo installing Ryujinx (Nintendo Switch Emulator)
-@echo off
-start /w simplesystemprep/executeable/ryujinx.exe
-@echo off
-del /f /q simplesystemprep\executeable\ryujinx.exe
+:: note to self
+:: download 7z.exe to root and extract archive then run exe and delete leftovers
 cls
 
 echo installing Flashpoint (Flash games)
