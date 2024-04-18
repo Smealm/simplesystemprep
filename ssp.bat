@@ -122,7 +122,7 @@ curl.exe -fSLo ryujinx.zip %Ryujinx_Switch%
 @echo off
 timeout /t 2
 @echo off
-move ryujinx.exe %ArchiveDir%
+move ryujinx.zip %ArchiveDir%
 cls
 
 echo downloading RyuSAK (Switch Dependencies)
