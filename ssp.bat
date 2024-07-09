@@ -1,274 +1,151 @@
-:: This script does
-:: 
-:: Download & installs DirectX (Game Compatiblity)
-:: Download & installs VCRedist 2005-2024 x86 & x64 (Game Compatiblity)
-:: Download & installs Steam (Game Library & Storefront)
-:: Download & installs Heroic (Epic Games Launcher & Good Old Games's Library and Storefronts, all rolled into one Launcher)
-:: Download & installs Prism Launcher (Lightweight, MultiInstance Minecraft Launcher)
-:: Download & installs MuMu Player (Android Game Support)
-:: Download & installs RetroArch (Emulation Frontend providing emulation support for a wide range of systems and game consoles)
-:: Download & installs Ryujinx (Switch Game Support)
-:: Download & installs RyuSAK (Provides Ryujinx with Shader caches, Production keys & Firmware)
-:: Download & installs Flashpoint (Launcher used to play flash games)
-:: Download & installs Discord (Chatting platform aimed towards g*mers)
-:: Download & installs Spotify (Music)
-:: Runs MassGraves's Activation Scripts for Windows (Activate Windows) 
-::
-:: Self Cleaning
+:: NVIDIA GEFORCE EXPERIENCE INFORMATION
+:: Geforce Experience Version
+set NvidiaVersion="3.28.0.417"
 
-:: This script doesn't
-::
-:: check if files are already downloaded
-:: check if programs are already installed
-:: know if the files its deleting where successfully installed or not
+:: AME WIZARD INFORMATION
+:: AME Wizard Version
+set AMEVersion="0.7.5"
 
+:: ReviOS INFORMATION
+:: ReviOS Version
+set ReviOSVersion="24.06"
 
-title easy prep
+:: AtlasOS INFORMATION
+:: AtlasOS Version
+set AtlasOSVersion="0.4.0"
 
 cls
-
-:: creating temp folder(s)
-set ExecuteableDir="simplesystemprep\executeable\"
-set ArchiveDir="simplesystemprep\archives\"
-
-echo creating folder(s)
-@echo off
-mkdir simplesystemprep\archives
-mkdir simplesystemprep\executeable
-cls
-
-:: downloading files
-
-echo downloading DirectX Web Installer
-@echo off
-curl.exe -fSLo dxwebsetup.exe https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe
-@echo off
-timeout /t 2
-@echo off
-move dxwebsetup.exe %ExecuteableDir%
-cls
-
-echo downloading Spotify
-@echo off
-curl.exe -fSLo spotify.exe https://ninite.com/spotify/ninite.exe
-@echo off
-timeout /t 2
-@echo off
-move spotify.exe %ExecuteableDir%
-cls
-
-echo downloading Discord + Vencord
-@echo off
-curl.exe -fSLo discord.exe https://ninite.com/discord/ninite.exe
-@echo off
-curl.exe -fSLo vencord.exe https://github.com/Vencord/Installer/releases/latest/download/VencordInstaller.exe
-@echo off
-timeout /t 2
-@echo off
-move discord.exe %ExecuteableDir%
-@echo off
-move vencord.exe %ExecuteableDir%
-cls
-
-echo downloading Steam
-@echo off
-curl.exe -fSLo steam.exe https://ninite.com/steam/ninite.exe
-@echo off
-timeout /t 2
-@echo off
-move Steam.exe %ExecuteableDir%
-cls
-
-echo downloading Virtual Studio Redistributable
-@echo off
-curl.exe -fSLo VisualCppRedistAIO.exe https://rebrand.ly/vcpp
-@echo off
-timeout /t 2
-@echo off
-move  VisualCppRedistAIO.exe %ExecuteableDir%
-cls
-
-echo downloading Flashpoint (Flash Games)
-@echo off
-curl.exe -fSLo flashpoint.exe https://github.com/FlashpointProject/FlashpointComponentTools/releases/latest/download/FlashpointInstaller.exe
-@echo off
-timeout /t 2
-@echo off
-move flashpoint.exe %ExecuteableDir%
-cls
-
-
-
-::downloading files (continued)
-::NOTETOSELF: this section (below) is for static files. change them manually to point to the latest version of the program.
-:: -1(a) RyuSAK
-set RyuSAK_Switch="https://github.com/FennyFatal/RyuSAK/releases/download/v1.6.3-experimental/RyuSAK-1.6.3.Setup.exe"
-:: -1(b) Ryujinx
-set Ryujinx_Switch="https://github.com/Ryujinx/release-channel-master/releases/download/1.1.1106/ryujinx-1.1.1106-win_x64.zip"
-:: -2 MuMu
-set AndroidDownload="https://a11.gdl.netease.com/MuMuInstaller_3.1.6.0_gw-overseas12_all_1699416735.exe"
-:: -3 RetroArch
-set RetroArchDownload="https://buildbot.libretro.com/stable/1.16.0/windows/x86_64/RetroArch-Win64-setup.exe"
-:: -4 Heroic Games Launcher
-set HeroicDownload="https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.11.0/Heroic-2.11.0-Setup-x64.exe"
-:: -5 Prism Launcher
-set MinecraftDownload="https://github.com/PrismLauncher/PrismLauncher/releases/download/8.0/PrismLauncher-Windows-MSVC-Setup-8.0.exe"
-
-
-
-echo downloading Ryujinx (Switch Emulator)
-@echo off
-curl.exe -fSLo ryujinx.zip %Ryujinx_Switch%
-@echo off
-timeout /t 2
-@echo off
-move ryujinx.zip %ArchiveDir%
-cls
-
-echo downloading RyuSAK (Switch Dependencies)
-@echo off
-curl.exe -fSLo ryusak.exe %RyuSAK_Switch%
-@echo off
-timeout /t 2
-@echo off
-move ryusak.exe %ExecuteableDir%
-cls
-
-echo downloading MuMu Player (Android Emulator)
-@echo off
-curl.exe -fSLo mumu.exe %AndroidDownload%
-@echo off
-timeout /t 2
-@echo off
-move mumu.exe %ExecuteableDir%
-cls
-
-echo downloading RetroArch (Emulation Frontend)
-@echo off
-curl.exe -fSLo retroarch.exe %RetroArchDownload%
-@echo off
-timeout /t 2
-@echo off
-move retroarch.exe %ExecuteableDir%
-cls
-
-echo downloading Heroic Launcher (Epic Games and GOG)
-echo this might take a while...
-@echo off
-curl.exe -fSLo heroic.exe %HeroicDownload%
-@echo off
-timeout /t 2
-@echo off
-move heroic.exe %ExecuteableDir%
-cls
-
-echo downloading Prism (Minecraft)
-@echo off
-curl.exe -fSLo prism.exe %MinecraftDownload% 
-@echo off
-timeout /t 2
-@echo off
-move prism.exe %ExecuteableDir%
-cls
-
-:: running installers
-
-echo installing Virtual Studio Redistributable
-@echo off
-start /w simplesystemprep/executeable/VisualCppRedistAIO.exe
-@echo off
-del /f /q simplesystemprep\executeable\VisualCppRedistAIO.exe
-cls
-
-echo installing DirectX
-@echo off
-start /w simplesystemprep/executeable/dxwebsetup.exe
-@echo off
-del /f /q simplesystemprep\executeable\dxwebsetup.exe
-cls
-
-echo installing Steam
-@echo off
-start /w simplesystemprep/executeable/steam.exe
-@echo off
-del /f /q simplesystemprep\executeable\steam.exe
-cls
-
-echo installing Discord + Vencord
-@echo off
-start /w simplesystemprep/executeable/discord.exe
-@echo off
-del /f /q simplesystemprep\executeable\discord.exe
-@echo off
-start /w simplesystemprep/executeable/vencord.exe
-@echo off
-del /f /q simplesystemprep\executeable\vencord.exe
-cls
-
-echo installing Spotify
-@echo off
-start /w simplesystemprep/executeable/spotify.exe
-@echo off
-del /f /q simplesystemprep\executeable\spotify.exe
-cls
-
-echo installing Heroic Launcher (Epic Games and GOG) + Claimer
-@echo off
-start /w simplesystemprep/executeable/heroic.exe
-@echo off
-del /f /q simplesystemprep\executeable\heroic.exe
-cls
-
-echo installing Prism (Minecraft)
-@echo off
-start /w simplesystemprep/executeable/prism.exe
-@echo off
-del /f /q simplesystemprep\executeable\prism.exe
-cls
-
-echo installing RetroArch (Emulation Frontend)
-@echo off
-start /w simplesystemprep/executeable/retroarch.exe
-@echo off
-del /f /q simplesystemprep\executeable\retroarch.exe
-cls
-
-echo installing MuMu Player (Android Emulator)
-@echo off
-start /w simplesystemprep/executeable/mumu.exe
-@echo off
-del /f /q simplesystemprep\executeable\mumu.exe
-cls
-
-echo installing RyuSAK (Nintendo Switch Dependencies)
-@echo off
-start /w simplesystemprep/executeable/ryusak.exe
-@echo off
-del /f /q simplesystemprep\executeable\ryusak.exe
-cls
-
-echo installing Ryujinx (Nintendo Switch Emulator)
-:: note to self
-:: download 7z.exe to root and extract archive then run exe and delete leftovers
-cls
-
-echo installing Flashpoint (Flash games)
-@echo off
-start /w simplesystemprep/executeable/Flashpoint.exe
-@echo off
-del /f /q simplesystemprep\executeable\Flashpoint.exe
-cls
-
-echo running windows activation script
-@echo off
-echo Initialising
+:: Open activation script by pressing either 1 or 2
+choice /C 12 /M "Do you want to open the Windows Activation Script? 1 = YES, 2 = NO : "
+:: Listen for keypress "2", if pressed, run script then move on
+if errorlevel 2 goto NOACTIVATE
+:: Listen for keypress "1", if pressed, don't run script and continue
+if errorlevel 1 goto YESACTIVATE
+:YESACTIVATE
+:: Activate Windows
 powershell -c "irm https://massgrave.dev/get | iex"
-cls
+goto ActivateEND
+:NOACTIVATE
+goto ActivateEND
+:ActivateEND
 
-@echo cleaning up
-rmdir simplesystemprep
-cls
+:: Make "ssp" directory
+mkdir ssp
 
-@echo all actions completed
-pause
-exit /b 0
+:: Go into "ssp" directory
+cd ssp
+
+:: Download AME Wizard
+curl.exe -fSLo AME-Wizard-Beta.exe https://github.com/Ameliorated-LLC/trusted-uninstaller-cli/releases/download/%AMEVersion%/AME-Wizard-Beta.exe
+
+:: Download Java
+curl.exe -fSLo JavaInstall.exe https://ninite.com/adoptjavax11-adoptjavax17-adoptjavax21-adoptjavax8/ninite.exe
+
+:: Download .Net Desktop Runtime
+curl.exe -fSLo DotNetRuntime.exe https://ninite.com/.net4.8-.netx5-.netx6-.netx7-.netx8/ninite.exe
+
+:: Download DirectX Runtime
+curl.exe -fSLo dxwebsetup.exe https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe
+
+:: Download Visual C++ Redistributable All-in-One
+curl.exe -fSLo VisualCppRedist_AIO_x86_x64.exe https://kutt.it/vcpp
+
+:: Enables delayed expansion of variables (!variable! syntax)
+SETLOCAL EnableDelayedExpansion
+
+:: Get GPU name and store it and echo it
+for /f "skip=1 tokens=*" %%a in ('wmic path Win32_VideoController get Description /format:list') do (
+set "gpu_name=%%a"
+echo !gpu_name!
+    
+:: If echoed GPU name includes "Nvidia" download Geforce Experience	
+echo !gpu_name! | findstr /i "NVIDIA" > nul
+if !errorlevel! equ 0 (
+echo Downloading Geforce Experience
+curl.exe -fSLo GeForce_Experience_v%NvidiaVersion%.exe https://us.download.nvidia.com/GFE/GFEClient/%NvidiaVersion%/GeForce_Experience_v%NvidiaVersion%.exe
+)
+
+:: If echoed GPU name includes "AMD" download Adrenalin
+echo !gpu_name! | findstr /i "AMD" > nul
+if !errorlevel! equ 0 (
+echo Downloading Adrenalin
+curl.exe -fSLo amd-software-adrenalin-edition-24.6.1-minimalsetup-240626_web.exe https://drivers.amd.com/drivers/installer/24.10/whql/amd-software-adrenalin-edition-24.6.1-minimalsetup-240626_web.exe
+)
+
+)
+:: Disables delayed expansion of variables (!variable! syntax)
+ENDLOCAL
+
+cls
+:: Download ReviOS or AtlasOS by pressing either 1 or 2
+choice /C 12 /M "Press 1 to download ReviOS. Press 2 to download AtlasOS: "
+:: Listen for keypress "2", if pressed, download ReviOS Playbook then move on
+if errorlevel 2 goto AtlasOS
+:: Listen for keypress "1", if pressed, download AtlasOS Playbook then move on
+if errorlevel 1 goto ReviOS
+:ReviOS
+echo You chose download ReviOS!
+curl.exe -fSLo Revi-PB-%ReviOSVersion%.apbx https://github.com/meetrevision/playbook/releases/download/%ReviOSVersion%/Revi-PB-%ReviOSVersion%.apbx
+goto PlaybookEND
+:AtlasOS
+echo You chose to download AtlasOS!
+curl.exe -fSLo AtlasPlaybook_v%AtlasOSVersion%.apbx https://github.com/Atlas-OS/Atlas/releases/download/%AtlasOSVersion%/AtlasPlaybook_v%AtlasOSVersion%.apbx
+goto PlaybookEND
+:PlaybookEND
+
+
+
+:: Run VisualCppRedist_AIO_x86_x64.exe and install
+VisualCppRedist_AIO_x86_x64.exe /y
+
+:: Run dxwebsetup.exe quietly
+dxwebsetup.exe /q
+
+:: Run JavaInstall.exe
+JavaInstall.exe
+
+:: Run DotNetRuntime.exe 
+DotNetRuntime.exe
+
+:: Run Geforce Experience (if you have an Nvidia GPU)
+if exist GeForce_Experience_v%NvidiaVersion%.exe ( 
+ GeForce_Experience_v%NvidiaVersion%.exe
+ goto NvidiaPass
+) else (
+ goto NvidiaPass
+)
+:NvidiaPass
+
+:: Run AMD Adrenalin (if you have an AMD GPU)
+if exist amd-software-adrenalin-edition-24.6.1-minimalsetup-240626_web.exe ( 
+ amd-software-adrenalin-edition-24.6.1-minimalsetup-240626_web.exe
+ goto AMDPass
+) else (
+ goto AMDPass
+)
+:AMDPass
+
+
+:: Clean up
+del DotNetRuntime.exe
+del JavaInstall.exe
+del VisualCppRedist_AIO_x86_x64.exe
+del dxwebsetup.exe
+del GeForce_Experience_v%NvidiaVersion%.exe
+del amd-software-adrenalin-edition-24.6.1-minimalsetup-240626_web.exe
+
+cls
+@ECHO running AME Wizard
+@ECHO when asked for a playbook choose the one you chose to download earlier
+@ECHO (AtlasOS or ReviOS) 
+@ECHO Install it, choose your prefered browser and settings.
+@ECHO If you dont know which browser or settings to choose then just use the defaults.
+@ECHO The playbook simply debloats Windows and tweaks it to make it run significantly faster
+@ECHO If you do not want to do this, simply close this window and delete the "ssp" directory, otherwise please
+@ECHO Off
+Pause
+@ECHO Off
+:: Run AME Wizard
+AME-Wizard-Beta.exe
+
+
