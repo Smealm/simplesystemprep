@@ -2,6 +2,13 @@
 :: Geforce Experience Version
 set NvidiaVersion="3.28.0.417"
 
+:: AMD ADRENALIN INFORMATION
+:: Adrenalin Version
+set AMDVersion="24.6.1"
+:: Installer Version
+set AMDInstall="240626"
+
+
 :: AME WIZARD INFORMATION
 :: AME Wizard Version
 set AMEVersion="0.7.5"
@@ -29,8 +36,15 @@ goto ActivateEND
 goto ActivateEND
 :ActivateEND
 
-:: Make "ssp" directory
+:: Create "ssp" directory
 mkdir ssp
+
+:: Download OpenAL
+curl.exe -fSLo ssp.zip https://www.openal.org/downloads/oalinst.zip
+:: Extract ssp.zip (OpenAL)
+powershell Expand-Archive -Force ssp.zip
+:: Delete Archive
+del ssp.zip
 
 :: Go into "ssp" directory
 cd ssp
@@ -50,6 +64,9 @@ curl.exe -fSLo dxwebsetup.exe https://download.microsoft.com/download/1/7/1/1718
 :: Download Visual C++ Redistributable All-in-One
 curl.exe -fSLo VisualCppRedist_AIO_x86_x64.exe https://kutt.it/vcpp
 
+:: Download XNA Framework 4.0
+curl.exe -fSLo xnafx40_redist.msi https://download.microsoft.com/download/A/C/2/AC2C903B-E6E8-42C2-9FD7-BEBAC362A930/xnafx40_redist.msi
+
 :: Enables delayed expansion of variables (!variable! syntax)
 SETLOCAL EnableDelayedExpansion
 
@@ -68,8 +85,12 @@ curl.exe -fSLo GeForce_Experience_v%NvidiaVersion%.exe https://us.download.nvidi
 :: If echoed GPU name includes "AMD" download Adrenalin
 echo !gpu_name! | findstr /i "AMD" > nul
 if !errorlevel! equ 0 (
-echo Downloading Adrenalin
-curl.exe -fSLo amd-software-adrenalin-edition-24.6.1-minimalsetup-240626_web.exe https://drivers.amd.com/drivers/installer/24.10/whql/amd-software-adrenalin-edition-24.6.1-minimalsetup-240626_web.exe
+@echo You have a AMD GPU! 
+@echo Your browser will soon open, once it's open click the button that says "Download Windows Drivers"
+@echo Please download the EXE to the scripts's "ssp" folder.
+@echo DO NOT change the name of the downloaded EXE file!
+Pause
+start https://www.amd.com/en/support/download/drivers.html
 )
 
 )
@@ -104,6 +125,12 @@ dxwebsetup.exe /q
 :: Run JavaInstall.exe
 JavaInstall.exe
 
+:: Run oalinst.exe
+oalinst.exe
+
+:: Run xnafx40_redist.msi
+xnafx40_redist.msi
+
 :: Run DotNetRuntime.exe 
 DotNetRuntime.exe
 
@@ -117,8 +144,8 @@ if exist GeForce_Experience_v%NvidiaVersion%.exe (
 :NvidiaPass
 
 :: Run AMD Adrenalin (if you have an AMD GPU)
-if exist amd-software-adrenalin-edition-24.6.1-minimalsetup-240626_web.exe ( 
- amd-software-adrenalin-edition-24.6.1-minimalsetup-240626_web.exe
+if exist amd-software-adrenalin-edition-%AMDVersion%-minimalsetup-%AMDInstall%_web.exe ( 
+ amd-software-adrenalin-edition-%AMDVersion%-minimalsetup-%AMDInstall%_web.exe
  goto AMDPass
 ) else (
  goto AMDPass
@@ -131,8 +158,10 @@ del DotNetRuntime.exe
 del JavaInstall.exe
 del VisualCppRedist_AIO_x86_x64.exe
 del dxwebsetup.exe
+del oalinst.exe
+del xnafx40_redist.msi
 del GeForce_Experience_v%NvidiaVersion%.exe
-del amd-software-adrenalin-edition-24.6.1-minimalsetup-240626_web.exe
+del amd-software-adrenalin-edition-%AMDVersion%-minimalsetup-%AMDInstall%_web.exe
 
 cls
 @ECHO running AME Wizard
@@ -147,5 +176,3 @@ Pause
 @ECHO Off
 :: Run AME Wizard
 AME-Wizard-Beta.exe
-
-
