@@ -91,6 +91,8 @@ if !errorlevel! equ 0 (
 @echo DO NOT change the name of the downloaded EXE file!
 Pause
 start https://www.amd.com/en/support/download/drivers.html
+@echo Once you have completed the steps above
+Pause
 )
 
 )
