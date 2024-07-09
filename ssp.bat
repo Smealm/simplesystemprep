@@ -56,10 +56,11 @@ mkdir ssp
 cls
 :: Open activation script by pressing either 1 or 2
 choice /C 12 /M "Do you want to open the Windows Activation Script? 1 = YES, 2 = NO : "
-:: Listen for keypress "1", if pressed, don't run script and continue
-if errorlevel 1 goto ActivateEND
-:: Listen for keypress "2", if pressed, run script then move on
-if errorlevel 2 goto YESACTIVATE	
+:: Listen for keypress "1", if pressed, run script then move on
+if errorlevel 1 goto YESACTIVATE	
+:: Listen for keypress "2", if pressed, don't run script and continue
+if errorlevel 2 goto ActivateEND
+
 :YESACTIVATE
 :: Activate Windows
 powershell -c "irm https://massgrave.dev/get | iex"
