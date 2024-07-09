@@ -140,7 +140,7 @@ cls
 @ECHO (AtlasOS or ReviOS) 
 @ECHO Install it, choose your prefered browser and settings.
 @ECHO If you dont know which browser or settings to choose then just use the defaults.
-@ECHO The playbook simply debloats Windows and tweaks it to make it run significantly faster
+@ECHO The playbook simply debloats Windows and tweaks it to make it run smoother
 @ECHO If you do not want to do this, simply close this window and delete the "ssp" directory, otherwise please
 @ECHO Off
 Pause
