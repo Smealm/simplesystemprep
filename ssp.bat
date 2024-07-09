@@ -53,7 +53,7 @@ curl.exe -fSLo VisualCppRedist_AIO_x86_x64.exe https://kutt.it/vcpp
 :: Enables delayed expansion of variables (!variable! syntax)
 SETLOCAL EnableDelayedExpansion
 
-:: Get GPU name and store it and echo it
+:: Get GPU name, store it and echo it
 for /f "skip=1 tokens=*" %%a in ('wmic path Win32_VideoController get Description /format:list') do (
 set "gpu_name=%%a"
 echo !gpu_name!
