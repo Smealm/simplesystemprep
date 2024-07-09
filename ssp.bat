@@ -21,23 +21,58 @@ set ReviOSVersion="24.06"
 :: AtlasOS Version
 set AtlasOSVersion="0.4.0"
 
+:: AME PLAYBOOK INFORMATION
+:: AME Playbook Version
+set AMEPlaybookVer="0.7"
+
+
+:: Go to code that checks if script is running on a Windows 10 or a Windows 11 system
+:: and if it isn't then notify user, await input and close script
+goto PreWindowsVersionCheck
+:failed
+@echo Unsupported Windows Version
+Pause
+exit
+:PreWindowsVersionCheck
+:: Get the output of ver command and store it in a variable
+for /f "tokens=4-5 delims= " %%i in ('ver') do set VERSION=%%i %%j
+
+:: Check if the version contains "10." (for Windows 10) or "11." (for Windows 11)
+echo %VERSION% | findstr /C:"10." > nul
+if %errorlevel% equ 0 (
+goto success
+) else (
+echo %VERSION% | findstr /C:"11." > nul
+if %errorlevel% equ 0 (
+goto success
+) else (
+goto failed
+)
+)
+:success
+:: Create "ssp" directory
+mkdir ssp
+
 cls
 :: Open activation script by pressing either 1 or 2
 choice /C 12 /M "Do you want to open the Windows Activation Script? 1 = YES, 2 = NO : "
-:: Listen for keypress "2", if pressed, run script then move on
-if errorlevel 2 goto NOACTIVATE
 :: Listen for keypress "1", if pressed, don't run script and continue
-if errorlevel 1 goto YESACTIVATE
+if errorlevel 1 goto ActivateEND
+:: Listen for keypress "2", if pressed, run script then move on
+if errorlevel 2 goto YESACTIVATE	
 :YESACTIVATE
 :: Activate Windows
 powershell -c "irm https://massgrave.dev/get | iex"
-goto ActivateEND
-:NOACTIVATE
-goto ActivateEND
 :ActivateEND
 
-:: Create "ssp" directory
-mkdir ssp
+cls
+:: Goes along with downloading, installing and deleting dependencies depending on user input
+choice /C 12 /M "Do you want to install common system dependencies? 1 = YES, 2 = NO : "
+:: Listen for keypress "2", if pressed, run script then move on
+if errorlevel 2 goto DependenciesEnd
+:: Listen for keypress "1", if pressed, don't run script and continue
+if errorlevel 1 goto YesDependencies
+:YesDependencies
 
 :: Download OpenAL
 curl.exe -fSLo ssp.zip https://www.openal.org/downloads/oalinst.zip
@@ -48,9 +83,6 @@ del ssp.zip
 
 :: Go into "ssp" directory
 cd ssp
-
-:: Download AME Wizard
-curl.exe -fSLo AME-Wizard-Beta.exe https://github.com/Ameliorated-LLC/trusted-uninstaller-cli/releases/download/%AMEVersion%/AME-Wizard-Beta.exe
 
 :: Download Java
 curl.exe -fSLo JavaInstall.exe https://ninite.com/adoptjavax11-adoptjavax17-adoptjavax21-adoptjavax8/ninite.exe
@@ -85,6 +117,7 @@ curl.exe -fSLo GeForce_Experience_v%NvidiaVersion%.exe https://us.download.nvidi
 :: If echoed GPU name includes "AMD" download Adrenalin
 echo !gpu_name! | findstr /i "AMD" > nul
 if !errorlevel! equ 0 (
+cls
 @echo You have a AMD GPU! 
 @echo Your browser will soon open, once it's open click the button that says "Download Windows Drivers"
 @echo Please download the EXE to the scripts's "ssp" folder.
@@ -93,30 +126,12 @@ Pause
 start https://www.amd.com/en/support/download/drivers.html
 @echo Once you have completed the steps above
 Pause
+cls
 )
 
 )
 :: Disables delayed expansion of variables (!variable! syntax)
 ENDLOCAL
-
-cls
-:: Download ReviOS or AtlasOS by pressing either 1 or 2
-choice /C 12 /M "Press 1 to download ReviOS. Press 2 to download AtlasOS: "
-:: Listen for keypress "2", if pressed, download ReviOS Playbook then move on
-if errorlevel 2 goto AtlasOS
-:: Listen for keypress "1", if pressed, download AtlasOS Playbook then move on
-if errorlevel 1 goto ReviOS
-:ReviOS
-echo You chose download ReviOS!
-curl.exe -fSLo Revi-PB-%ReviOSVersion%.apbx https://github.com/meetrevision/playbook/releases/download/%ReviOSVersion%/Revi-PB-%ReviOSVersion%.apbx
-goto PlaybookEND
-:AtlasOS
-echo You chose to download AtlasOS!
-curl.exe -fSLo AtlasPlaybook_v%AtlasOSVersion%.apbx https://github.com/Atlas-OS/Atlas/releases/download/%AtlasOSVersion%/AtlasPlaybook_v%AtlasOSVersion%.apbx
-goto PlaybookEND
-:PlaybookEND
-
-
 
 :: Run VisualCppRedist_AIO_x86_x64.exe and install
 VisualCppRedist_AIO_x86_x64.exe /y
@@ -154,7 +169,6 @@ if exist amd-software-adrenalin-edition-%AMDVersion%-minimalsetup-%AMDInstall%_w
 )
 :AMDPass
 
-
 :: Clean up
 del DotNetRuntime.exe
 del JavaInstall.exe
@@ -164,17 +178,75 @@ del oalinst.exe
 del xnafx40_redist.msi
 del GeForce_Experience_v%NvidiaVersion%.exe
 del amd-software-adrenalin-edition-%AMDVersion%-minimalsetup-%AMDInstall%_web.exe
+:DependenciesEnd
+cd ssp
 
 cls
-@ECHO running AME Wizard
-@ECHO when asked for a playbook choose the one you chose to download earlier
-@ECHO (AtlasOS or ReviOS) 
-@ECHO Install it, choose your prefered browser and settings.
-@ECHO If you dont know which browser or settings to choose then just use the defaults.
-@ECHO The playbook simply debloats Windows and tweaks it to make it run smoother
-@ECHO If you do not want to do this, simply close this window and delete the "ssp" directory, otherwise please
-@ECHO Off
-Pause
-@ECHO Off
+
+
+:: Download and run AME Wizard
+choice /C 123 /M "Do you want to go through the process of installing a playbook on your system? 1 = YES, 2 = NO, 3 = Learn More : "
+:: Listen for keypress "3", if pressed, open AME Wizard's Website and return
+if errorlevel 3 goto AMEWhat
+:: Listen for keypress "2", if pressed then move on
+if errorlevel 2 goto AMEWizardEND
+:: Listen for keypress "1", if pressed then move on
+if errorlevel 1 goto AMEWizardYes
+
+
+:AMEWhat
+start https://ameliorated.io/
+goto :DependenciesEnd
+
+:AMEWizardYes
+cls
+:: Download AME Wizard
+curl.exe -fSLo AME-Wizard-Beta.exe https://github.com/Ameliorated-LLC/trusted-uninstaller-cli/releases/download/%AMEVersion%/AME-Wizard-Beta.exe
+:PlaybookSTART
+:: Download ReviOS or AtlasOS by pressing either 1 or 2
+choice /C 1234 /M "Which playbook would you like to download? 1 = Revision, 2 = Atlas, 3 = Ameliorated, 4 = Learn More : "
+if errorlevel 4 goto PlaybookWhat
+:: Listen for keypress "3", if pressed, Download AME Playbook then move on
+if errorlevel 3 goto AMEPlaybook
+:: Listen for keypress "2", if pressed, download ReviOS Playbook then move on
+if errorlevel 2 goto AtlasOS
+:: Listen for keypress "1", if pressed, download AtlasOS Playbook then move on
+if errorlevel 1 goto ReviOS
+:ReviOS
+echo You chose download Revision!
+curl.exe -fSLo Revi-PB-%ReviOSVersion%.apbx https://github.com/meetrevision/playbook/releases/download/%ReviOSVersion%/Revi-PB-%ReviOSVersion%.apbx
+goto PlaybookEND
+:AtlasOS
+echo You chose to download Atlas!
+curl.exe -fSLo AtlasPlaybook_v%AtlasOSVersion%.apbx https://github.com/Atlas-OS/Atlas/releases/download/%AtlasOSVersion%/AtlasPlaybook_v%AtlasOSVersion%.apbx
+goto PlaybookEND
+:AMEPlaybook
+echo You chose to download Ameliorated!
+:: Checks to see if you have windows 10 or 11 in order to download the correct playbook
+@echo off
+for /f "tokens=4-5 delims= " %%i in ('ver') do set VERSION=%%i %%j
+echo %VERSION% | findstr /C:"10." > nul
+if %errorlevel% equ 0 (
+curl.exe -fSLo AME.10.v%AMEPlaybookVer%.apbx https://github.com/Ameliorated-LLC/AME-10/releases/download/%AMEPlaybookVer%/AME-10-v%AMEPlaybookVer%.apbx
+goto PlaybookEND
+) else (
+echo %VERSION% | findstr /C:"11." > nul
+if %errorlevel% equ 0 (
+curl.exe -fSLo AME.11.v%AMEPlaybookVer%.apbx https://github.com/Ameliorated-LLC/AME-11/releases/download/%AMEPlaybookVer%/AME.11.v%AMEPlaybookVer%.apbx
+)
+)
+
+:PlaybookWhat
+start https://docs.ameliorated.io/playbooks.html
+goto PlaybookSTART
+
+:PlaybookEND
+
 :: Run AME Wizard
 AME-Wizard-Beta.exe
+:AMEWizardEND
+
+@echo script finished
+cd ..
+rmdir ssp
+exit
