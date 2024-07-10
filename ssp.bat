@@ -119,7 +119,6 @@ cls
 :: INSTALL DEPENDENCIES
 
 
-cls
 :: Goes along with downloading, installing and deleting dependencies depending on user input
 choice /C 12 /M "Do you want to install common system dependencies? 1 = YES, 2 = NO : "
 :: Listen for keypress "2", if pressed, run script then move on
