@@ -322,7 +322,7 @@ tasklist /FI "IMAGENAME eq %processName%" 2>NUL | findstr /I /C:"%processName%" 
 if %ERRORLEVEL% == 0 (
     echo %processName% is still running. Waiting...
     timeout /t 1 /nobreak > NUL
-    goto waitForProcess
+    goto AMEWizardLoopCheck
 )
 
 :: Execute the desired command
