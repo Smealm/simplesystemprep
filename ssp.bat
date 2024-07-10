@@ -1,3 +1,7 @@
+Credits:
+Myself
+[ChatGPT](https://chatgpt.com/) for teaching me how to do things I had trouble figuring out
+
 :: --------------------------------------------------------------------------------------------
 cls
 
