@@ -121,9 +121,9 @@ cls
 
 :: Goes along with downloading, installing and deleting dependencies depending on user input
 choice /C 12 /M "Do you want to install common system dependencies? 1 = YES, 2 = NO : "
-:: Listen for keypress "2", if pressed, run script then move on
+:: Listen for keypress "2", if pressed, don't run script and continue
 if errorlevel 2 goto DependenciesEnd
-:: Listen for keypress "1", if pressed, don't run script and continue
+:: Listen for keypress "1", if pressed, run script then move on
 if errorlevel 1 goto YesDependencies
 :YesDependencies
 :: Create "ssp" directory
