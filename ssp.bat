@@ -13,6 +13,19 @@ cls
 :: Geforce Experience Version
 set NvidiaVersion="3.28.0.417"
 
+:: OBS INFORMATION
+:: OBS Version
+set OBSVersion="30.1.2"
+
+:: RETROARCH INFORMATION
+:: RetroArch Version
+set RetroArchVersion="1.19.1"
+
+:: LAUNCHBOX INFORMATION
+:: LaunchBox Version
+set LaunchBoxVersion="13.15"
+
+
 :: AME WIZARD INFORMATION
 :: AME Wizard Version
 set AMEVersion="0.7.5"
@@ -259,8 +272,233 @@ cls
 
 :: EXTRA SOFTWARE
 
-:: There is nothing here yet
+:: Goes along with downloading, installing and deleting extra software depending on user input
+choice /C 12 /M "Do you want to install extra software? 1 = YES, 2 = NO : "
 
+:: Listen for keypress "2", if pressed, don't run script and continue
+if errorlevel 2 goto ExtraSoftwareEND
+
+:: Listen for keypress "1", if pressed, run script then move on
+if errorlevel 1 goto ExtraSoftwareYES
+:ExtraSoftwareYES
+cls
+
+:: Create "ssp" directory
+mkdir ssp
+
+:: Go into "ssp" directory
+cd ssp
+
+:: Ask question and await input
+choice /C 12 /M "Do you want to install gaming related software? 1 = YES, 2 = NO : "
+
+:: Listen for keypress "2", if pressed, don't run script and continue
+if errorlevel 2 goto ExtraSoftwareGamingEND
+
+:: Listen for keypress "1", if pressed, run script then move on
+if errorlevel 1 goto ExtraSoftwareGamingYES
+
+:ExtraSoftwareGamingYES
+cls
+
+:: Download Discord
+curl.exe -fSLo Discord.exe https://ninite.com/discord/ninite.exe
+
+curl.exe -fSLo Steam.exe https://ninite.com/steam/ninite.exe
+
+curl.exe -fSLo EpicGames.msi https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi
+
+curl.exe -fSLo MinecraftInstaller.exe https://launcher.mojang.com/download/MinecraftInstaller.exe
+
+MinecraftInstaller.exe
+
+taskkill minecraft.exe
+
+EpicGames.msi
+
+Steam.exe
+
+Discord.exe
+
+cls
+:: Ask question and await input
+choice /C 12 /M "Do you want to install optional tweaks for gaming related software? 1 = YES, 2 = NO : "
+
+:: Listen for keypress "2", if pressed, don't run script and continue
+if errorlevel 2 goto ExtraSoftwareGamingTweaksNO
+
+:: Listen for keypress "1", if pressed, run script then move on
+if errorlevel 1 goto ExtraSoftwareGamingTweaksYES
+
+:ExtraSoftwareGamingTweaksYES
+
+curl.exe -fSLo VencordInstaller.exe https://github.com/Vencord/Installer/releases/latest/download/VencordInstaller.exe
+
+VencordInstaller.exe
+
+:ExtraSoftwareGamingTweaksNO
+cls
+
+:: Ask question and await input
+choice /C 12 /M "Do you want to install emulation software? 1 = YES, 2 = NO : "
+
+:: Listen for keypress "2", if pressed, don't run script and continue
+if errorlevel 2 goto ExtraSoftwareGamingEmulationNO
+
+:: Listen for keypress "1", if pressed, run script then move on
+if errorlevel 1 goto ExtraSoftwareGamingEmulationYES
+
+:ExtraSoftwareGamingEmulationYES
+cls
+
+:: Ask question and await input
+choice /C 123 /M "Which emulation frontend do you want to install, RetroArch or LaunchBox? 1 = RetroArch, 2 = LaunchBox, 3 = Learn More : "
+
+:: Listen for keypress "3", if pressed, don't run script and continue
+if errorlevel 3 goto ExtraSoftwareGamingEmulationRetroLaunchWhat
+
+:: Listen for keypress "2", if pressed, don't run script and continue
+if errorlevel 2 goto ExtraSoftwareGamingEmulationLaunchbox
+
+:: Listen for keypress "1", if pressed, run script then move on
+if errorlevel 1 goto ExtraSoftwareGamingEmulationRetroarch
+
+:ExtraSoftwareGamingEmulationRetroLaunchWhat
+cls
+
+:: Ask question and await input
+choice /C 123 /M "Which frontend do you want to learn about? 1 = RetroArch, 2 = LaunchBox, 3 = Go Back : "
+
+:: Listen for keypress "3", if pressed, don't run script and continue
+if errorlevel 3 goto ExtraSoftwareGamingEmulationYES
+
+:: Listen for keypress "2", if pressed, don't run script and continue
+if errorlevel 2 goto ExtraSoftwareGamingEmulationLaunchboxWhat
+
+:: Listen for keypress "1", if pressed, run script then move on
+if errorlevel 1 goto ExtraSoftwareGamingEmulationRetroarchWhat
+
+:ExtraSoftwareGamingEmulationRetroarchWhat
+
+start https://www.retroarch.com/
+goto ExtraSoftwareGamingEmulationRetroLaunchWhat
+
+:ExtraSoftwareGamingEmulationLaunchboxWhat
+
+start https://www.launchbox-app.com/about
+goto ExtraSoftwareGamingEmulationRetroLaunchWhat
+
+:ExtraSoftwareGamingEmulationRetroarch
+
+curl.exe -fSLo RetroArch-v%RetroArchVersion%-setup.exe https://buildbot.libretro.com/stable/%RetroArchVersion%/windows/x86_64/RetroArch-Win64-setup.exe
+
+RetroArch-v%RetroArchVersion%-setup.exe
+
+goto ExtraSoftwareGamingEmulationRetroLaunchEND
+
+:ExtraSoftwareGamingEmulationLaunchbox
+
+cls
+@echo You have chose to download LaunchBox! 
+@echo Your browser will soon open, once it's follow the instructions to get the download link
+@echo Please download the EXE to the scripts's "ssp" folder.
+@echo DO NOT change the name of the downloaded EXE file!
+Pause
+start https://www.launchbox-app.com/download
+@echo Once you have completed the steps above
+Pause
+cls
+
+setlocal
+
+:: Find LaunchBox.
+for /f "delims=" %%F in ('dir /b /a-d "%~dp0\ssp\LaunchBox-*.exe" 2^>nul') do (
+
+:: run the file
+start "" "%~dp0\ssp\%%F"
+)
+endlocal
+
+:ExtraSoftwareGamingEmulationRetroLaunchEND
+
+curl.exe -fSLo Install-GooglePlayGames-Beta.exe https://dl.google.com/tag/s/CiZ7NDdCMDdENzEtNTA1RC00NjY1LUFGRDQtNDk3MkEzMEM2NTMwfRIEYmV0YRo8CjoIAhIZb3JnYW5pYy1taWNyb3NpdGUtd2luZG93cxoWaHR0cHM6Ly93d3cuZ29vZ2xlLmNvbSjGstMJKisI7gsSJnsxNWFiY2Y4Zi1lYTk5LTRlMjItODYxMi04Yzk1MDY2ZjIzNjV9QAFKAmVuUgViMmkyZQ/play/games/install/10/Install-GooglePlayGames-Beta.exe
+
+Install-GooglePlayGames-Beta.exe
+
+:ExtraSoftwareGamingEmulationNO
+cls
+
+:: Ask question and await input
+choice /C 123 /M "Do you want to install Playnite? 1 = YES, 2 = NO, 3 = Learn More : "
+
+:: Listen for keypress "3", if pressed, don't run script and continue
+if errorlevel 3 goto ExtraSoftwareGamingPlayniteWhat
+
+:: Listen for keypress "2", if pressed, don't run script and continue
+if errorlevel 2 goto ExtraSoftwareGamingPlayniteEND
+
+:: Listen for keypress "1", if pressed, run script then move on
+if errorlevel 1 goto ExtraSoftwareGamingPlayniteYES
+
+:ExtraSoftwareGamingPlayniteWhat
+
+start https://playnite.link/
+goto ExtraSoftwareGamingEmulationNO
+
+:ExtraSoftwareGamingPlayniteYES
+
+curl.exe -fSLo PlayniteInstaller.exe https://playnite.link/download/PlayniteInstaller.exe
+
+PlayniteInstaller.exe
+
+:ExtraSoftwareGamingPlayniteEND
+
+:ExtraSoftwareGamingEND
+cls
+
+:: Ask question and await input
+choice /C 12 /M "Do you want to install software for content creation? 1 = YES, 2 = NO : "
+
+:: Listen for keypress "2", if pressed, don't run script and continue
+if errorlevel 2 goto ExtraSoftwareContentCreationEND
+
+:: Listen for keypress "1", if pressed, run script then move on
+if errorlevel 1 goto ExtraSoftwareContentCreationYES
+
+:ExtraSoftwareContentCreationYES
+
+curl.exe -fSLo OBS-Studio-%OBSVersion%-Full-Installer-x64.exe https://cdn-fastly.obsproject.com/downloads/OBS-Studio-%OBSVersion%-Full-Installer-x64.exe
+
+OBS-Studio-%OBSVersion%-Full-Installer-x64.exe
+
+:ExtraSoftwareContentCreationEND
+cls
+
+:: Ask question and await input
+choice /C 12 /M "Do you want to install software to play audio and or visual content? 1 = YES, 2 = NO : "
+
+:: Listen for keypress "2", if pressed, don't run script and continue
+if errorlevel 2 goto ExtraSoftwareMediaNO
+
+:: Listen for keypress "1", if pressed, run script then move on
+if errorlevel 1 goto ExtraSoftwareMediaYES
+
+:ExtraSoftwareMediaYES
+
+cls
+
+curl.exe -fSLo SpotifyVLC.exe https://ninite.com/spotify-vlc/ninite.exe
+
+SpotifyVLC.exe
+
+:ExtraSoftwareMediaTweaksNO
+
+:ExtraSoftwareMediaNO
+
+:ExtraSoftwareEND
+
+cd ..
+rmdir /s /q ssp
 
 :: --------------------------------------------------------------------------------------------
 cls
@@ -413,5 +651,5 @@ shutdown /r
 
 @echo script finished
 cd ..
-rmdir ssp
+rmdir /s /q ssp
 exit
