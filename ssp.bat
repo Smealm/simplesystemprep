@@ -126,7 +126,7 @@ set "tempDir=ssp"
 if not exist "%tempDir%" mkdir "%tempDir%"
 
 :: Define the path for the downloaded file
-set "downloadedFile=%tempDir%"
+set "downloadedFile=*.msixbundle"
 
 :: Check if winget is already installed
 where winget >nul 2>&1
@@ -145,9 +145,9 @@ if not exist "%downloadedFile%" (
 )
 
 :: Find the actual .appxbundle file if multiple files are downloaded
-for %%F in ("%tempDir%\*.appxbundle") do set "installerFile=%%F"
+for %%F in ("%tempDir%\*.msixbundle") do set "installerFile=%%F"
 
-:: Check if an .appxbundle file was found
+:: Check if an .msixbundle file was found
 if not exist "%installerFile%" (
     echo No App Installer package file found in the downloaded package.
     goto wingetcheckSTART
