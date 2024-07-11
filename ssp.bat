@@ -122,7 +122,7 @@ set "tempDir=ssp"
 if not exist "%tempDir%" mkdir "%tempDir%"
 
 :: Define the path for the downloaded file
-set "downloadedFile=%tempDir%\AppInstaller.appxbundle"
+set "downloadedFile=%tempDir%"
 
 :: Check if winget is already installed
 where winget >nul 2>&1
