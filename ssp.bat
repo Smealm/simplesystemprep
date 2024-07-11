@@ -8,6 +8,10 @@ cls
 
 :: UPDATE PROGRAMS WITH STATIC URL's HERE
 
+:: OBS-MULTI-RTMP INFORMATION
+:: obs-multi-rtmp Version
+set OBSMultiRTMPVersion="0.6.0.1"
+
 :: AME WIZARD INFORMATION
 :: AME Wizard Version
 set AMEVersion="0.7.5"
@@ -498,6 +502,10 @@ if errorlevel 1 goto ExtraSoftwareContentCreationYES
 
 winget install -e --id OBSProject.OBSStudio
 
+curl.exe -fSLo obs-multi-rtmp-%OBSMultiRTMPVersion%-windows-x64-Installer.exe https://github.com/sorayuki/obs-multi-rtmp/releases/download/%OBSMultiRTMPVersion%/obs-multi-rtmp-%OBSMultiRTMPVersion%-windows-x64-Installer.exe
+
+obs-multi-rtmp-%OBSMultiRTMPVersion%-windows-x64-Installer.exe
+
 :ExtraSoftwareContentCreationEND
 cls
 
@@ -516,7 +524,6 @@ cls
 
 winget install -e --id Spotify.Spotify
 winget install -e --id VideoLAN.VLC
-
 
 :ExtraSoftwareMediaTweaksNO
 
