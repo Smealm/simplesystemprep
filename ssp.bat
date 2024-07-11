@@ -8,23 +8,9 @@ cls
 
 :: UPDATE PROGRAMS WITH STATIC URL's HERE
 
-
-:: NVIDIA GEFORCE EXPERIENCE INFORMATION
-:: Geforce Experience Version
-set NvidiaVersion="3.28.0.417"
-
-:: OBS INFORMATION
-:: OBS Version
-set OBSVersion="30.1.2"
-
-:: RETROARCH INFORMATION
-:: RetroArch Version
-set RetroArchVersion="1.19.1"
-
 :: LAUNCHBOX INFORMATION
 :: LaunchBox Version
 set LaunchBoxVersion="13.15"
-
 
 :: AME WIZARD INFORMATION
 :: AME Wizard Version
@@ -128,6 +114,64 @@ powershell -c "irm https://massgrave.dev/get | iex"
 :ActivateEND
 endlocal
 
+setlocal
+:wingetcheckSTART
+:: Define the base URL for the App Installer package
+set "appInstallerUrl=https://aka.ms/getwinget"
+
+:: Define the temporary directory for downloaded files
+set "tempDir=ssp"
+
+:: Create the temporary directory
+if not exist "%tempDir%" mkdir "%tempDir%"
+
+:: Define the path for the downloaded file
+set "downloadedFile=%tempDir%\AppInstaller.appxbundle"
+
+:: Check if winget is already installed
+where winget >nul 2>&1
+if %ERRORLEVEL% EQU 0 (
+  goto wingetcheckEND
+)
+
+:: Download the App Installer package
+echo Downloading App Installer from %appInstallerUrl%...
+powershell -Command "Invoke-WebRequest -Uri %appInstallerUrl% -OutFile %downloadedFile%"
+
+:: Check if the download was successful
+if not exist "%downloadedFile%" (
+    echo Failed to download the App Installer package.
+    goto wingetcheckSTART
+)
+
+:: Find the actual .appxbundle file if multiple files are downloaded
+for %%F in ("%tempDir%\*.appxbundle") do set "installerFile=%%F"
+
+:: Check if an .appxbundle file was found
+if not exist "%installerFile%" (
+    echo No App Installer package file found in the downloaded package.
+    goto wingetcheckSTART
+)
+
+:: Install the App Installer package
+echo Installing App Installer...
+powershell -Command "Add-AppxPackage -Path %installerFile%"
+
+:: Check if winget is now installed
+where winget >nul 2>&1
+if %ERRORLEVEL% EQU 0 (
+    echo winget was successfully installed.
+) else (
+    echo Failed to install winget.
+	exit
+)
+
+:wingetcheckEND
+:: Clean up the temporary directory and files
+rd /s /q "%tempDir%"
+
+endlocal
+
 
 :: --------------------------------------------------------------------------------------------
 cls
@@ -194,7 +238,7 @@ echo !gpu_name!
 echo !gpu_name! | findstr /i "NVIDIA" > nul
 if !errorlevel! equ 0 (
 echo Downloading Geforce Experience
-curl.exe -fSLo GeForce_Experience_v%NvidiaVersion%.exe https://us.download.nvidia.com/GFE/GFEClient/%NvidiaVersion%/GeForce_Experience_v%NvidiaVersion%.exe
+winget install -e --id Nvidia.GeForceExperience
 cls
 goto GPUDOWNLOADEND
 )
@@ -239,15 +283,6 @@ xnafx40_redist.msi
 :: Run DotNetRuntime.exe 
 DotNetRuntime.exe
 
-:: Run Geforce Experience (if you have an Nvidia GPU)
-if exist GeForce_Experience_v%NvidiaVersion%.exe ( 
- GeForce_Experience_v%NvidiaVersion%.exe
- goto NvidiaPass
-) else (
- goto NvidiaPass
-)
-:NvidiaPass
-
 setlocal
 
 :: Find AMD Adrenalin.
@@ -289,6 +324,10 @@ mkdir ssp
 :: Go into "ssp" directory
 cd ssp
 
+winget install -e --id Cloudflare.Warp
+
+cls
+
 :: Ask question and await input
 choice /C 12 /M "Do you want to install gaming related software? 1 = YES, 2 = NO : "
 
@@ -301,24 +340,15 @@ if errorlevel 1 goto ExtraSoftwareGamingYES
 :ExtraSoftwareGamingYES
 cls
 
-:: Download Discord
-curl.exe -fSLo Discord.exe https://ninite.com/discord/ninite.exe
+winget install -e --id Discord.Discord
 
-curl.exe -fSLo Steam.exe https://ninite.com/steam/ninite.exe
+winget install -e --id Valve.Steam
 
-curl.exe -fSLo EpicGames.msi https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi
+winget install -e --id EpicGames.EpicGamesLauncher
 
-curl.exe -fSLo MinecraftInstaller.exe https://launcher.mojang.com/download/MinecraftInstaller.exe
+winget install -e --id GOG.Galaxy
 
-MinecraftInstaller.exe
-
-taskkill minecraft.exe
-
-EpicGames.msi
-
-Steam.exe
-
-Discord.exe
+winget install -e --id Mojang.MinecraftLauncher
 
 cls
 :: Ask question and await input
@@ -333,6 +363,8 @@ if errorlevel 1 goto ExtraSoftwareGamingTweaksYES
 :ExtraSoftwareGamingTweaksYES
 
 curl.exe -fSLo VencordInstaller.exe https://github.com/Vencord/Installer/releases/latest/download/VencordInstaller.exe
+
+taskkill /im "discord.exe" /f
 
 VencordInstaller.exe
 
@@ -390,9 +422,7 @@ goto ExtraSoftwareGamingEmulationRetroLaunchWhat
 
 :ExtraSoftwareGamingEmulationRetroarch
 
-curl.exe -fSLo RetroArch-v%RetroArchVersion%-setup.exe https://buildbot.libretro.com/stable/%RetroArchVersion%/windows/x86_64/RetroArch-Win64-setup.exe
-
-RetroArch-v%RetroArchVersion%-setup.exe
+winget install -e --id Libretro.RetroArch
 
 goto ExtraSoftwareGamingEmulationRetroLaunchEND
 
@@ -447,9 +477,7 @@ goto ExtraSoftwareGamingEmulationNO
 
 :ExtraSoftwareGamingPlayniteYES
 
-curl.exe -fSLo PlayniteInstaller.exe https://playnite.link/download/PlayniteInstaller.exe
-
-PlayniteInstaller.exe
+winget install -e --id Playnite.Playnite
 
 :ExtraSoftwareGamingPlayniteEND
 
@@ -467,9 +495,7 @@ if errorlevel 1 goto ExtraSoftwareContentCreationYES
 
 :ExtraSoftwareContentCreationYES
 
-curl.exe -fSLo OBS-Studio-%OBSVersion%-Full-Installer-x64.exe https://cdn-fastly.obsproject.com/downloads/OBS-Studio-%OBSVersion%-Full-Installer-x64.exe
-
-OBS-Studio-%OBSVersion%-Full-Installer-x64.exe
+winget install -e --id OBSProject.OBSStudio
 
 :ExtraSoftwareContentCreationEND
 cls
@@ -487,9 +513,9 @@ if errorlevel 1 goto ExtraSoftwareMediaYES
 
 cls
 
-curl.exe -fSLo SpotifyVLC.exe https://ninite.com/spotify-vlc/ninite.exe
+winget install -e --id Spotify.Spotify
+winget install -e --id VideoLAN.VLC
 
-SpotifyVLC.exe
 
 :ExtraSoftwareMediaTweaksNO
 
