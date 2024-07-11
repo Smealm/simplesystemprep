@@ -214,7 +214,7 @@ curl.exe -fSLo JavaInstall.exe https://ninite.com/adoptjavax11-adoptjavax17-adop
 curl.exe -fSLo DotNetRuntime.exe https://ninite.com/.net4.8-.netx5-.netx6-.netx7-.netx8/ninite.exe
 
 :: Download DirectX Runtime
-curl.exe -fSLo dxwebsetup.exe https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe
+winget install -e --id Microsoft.DirectX
 
 :: Download Visual C++ Redistributable All-in-One
 curl.exe -fSLo VisualCppRedist_AIO_x86_x64.exe https://kutt.it/vcpp
@@ -263,9 +263,6 @@ ENDLOCAL
 
 :: Run VisualCppRedist_AIO_x86_x64.exe and install
 VisualCppRedist_AIO_x86_x64.exe /y
-
-:: Run dxwebsetup.exe quietly
-dxwebsetup.exe /q
 
 :: Run JavaInstall.exe
 JavaInstall.exe
@@ -321,6 +318,16 @@ mkdir ssp
 cd ssp
 
 winget install -e --id Cloudflare.Warp
+
+winget install -e --id Giorgiotani.Peazip
+
+winget install -e --id AntibodySoftware.WizTree
+
+winget install -e --id AntibodySoftware.WizFile
+
+winget install -e --id Klocman.BulkCrapUninstaller
+
+winget install -e --id BleachBit.BleachBit
 
 cls
 
@@ -447,9 +454,7 @@ endlocal
 
 :ExtraSoftwareGamingEmulationRetroLaunchEND
 
-curl.exe -fSLo Install-GooglePlayGames-Beta.exe https://dl.google.com/tag/s/CiZ7NDdCMDdENzEtNTA1RC00NjY1LUFGRDQtNDk3MkEzMEM2NTMwfRIEYmV0YRo8CjoIAhIZb3JnYW5pYy1taWNyb3NpdGUtd2luZG93cxoWaHR0cHM6Ly93d3cuZ29vZ2xlLmNvbSjGstMJKisI7gsSJnsxNWFiY2Y4Zi1lYTk5LTRlMjItODYxMi04Yzk1MDY2ZjIzNjV9QAFKAmVuUgViMmkyZQ/play/games/install/10/Install-GooglePlayGames-Beta.exe
-
-Install-GooglePlayGames-Beta.exe
+winget install -e --id Google.PlayGames.Beta
 
 :ExtraSoftwareGamingEmulationNO
 cls
