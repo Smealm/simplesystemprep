@@ -8,10 +8,6 @@ cls
 
 :: UPDATE PROGRAMS WITH STATIC URL's HERE
 
-:: LAUNCHBOX INFORMATION
-:: LaunchBox Version
-set LaunchBoxVersion="13.15"
-
 :: AME WIZARD INFORMATION
 :: AME Wizard Version
 set AMEVersion="0.7.5"
