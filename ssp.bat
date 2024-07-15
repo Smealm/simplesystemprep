@@ -321,18 +321,6 @@ mkdir ssp
 :: Go into "ssp" directory
 cd ssp
 
-winget install -e --id Cloudflare.Warp
-
-winget install -e --id Giorgiotani.Peazip
-
-winget install -e --id AntibodySoftware.WizTree
-
-winget install -e --id AntibodySoftware.WizFile
-
-winget install -e --id Klocman.BulkCrapUninstaller
-
-winget install -e --id BleachBit.BleachBit
-
 cls
 
 :: Ask question and await input
@@ -485,8 +473,73 @@ goto ExtraSoftwareGamingEmulationNO
 winget install -e --id Playnite.Playnite
 
 :ExtraSoftwareGamingPlayniteEND
+cls
+
+:: Ask question and await input
+choice /C 123 /M "Do you want to install Flashpoint? 1 = YES, 2 = NO, 3 = Learn More : "
+
+:: Listen for keypress "3", if pressed, don't run script and continue
+if errorlevel 3 goto ExtraSoftwareGamingFlashpointWhat
+
+:: Listen for keypress "2", if pressed, don't run script and continue
+if errorlevel 2 goto ExtraSoftwareGamingFlashpointEND
+
+:: Listen for keypress "1", if pressed, run script then move on
+if errorlevel 1 goto ExtraSoftwareGamingFlashpointYES
+
+:ExtraSoftwareGamingFlashpointWhat
+
+start https://flashpointarchive.org/
+goto ExtraSoftwareGamingEmulationNO
+
+:ExtraSoftwareGamingFlashpointYES
+
+curl.exe -fSLo FlashpointInstaller.exe https://github.com/FlashpointProject/FlashpointComponentTools/releases/latest/download/FlashpointInstaller.exe
+FlashpointInstaller.exe
+
+:ExtraSoftwareGamingFlashpointEND
 
 :ExtraSoftwareGamingEND
+cls
+
+:: Ask question and await input
+choice /C 12 /M "Do you want to install network related software? 1 = YES, 2 = NO : "
+
+:: Listen for keypress "2", if pressed, don't run script and continue
+if errorlevel 2 goto ExtraSoftwareNetworkEND
+
+:: Listen for keypress "1", if pressed, run script then move on
+if errorlevel 1 goto ExtraSoftwareNetworkYES
+
+:ExtraSoftwareNetworkYES
+
+winget install -e --id Cloudflare.Warp
+
+:ExtraSoftwareNetworkEND
+cls
+
+:: Ask question and await input
+choice /C 12 /M "Do you want to install data management software? 1 = YES, 2 = NO : "
+
+:: Listen for keypress "2", if pressed, don't run script and continue
+if errorlevel 2 goto ExtraSoftwareManagementEND
+
+:: Listen for keypress "1", if pressed, run script then move on
+if errorlevel 1 goto ExtraSoftwareManagementYES
+
+:ExtraSoftwareManagementYES
+
+winget install -e --id Giorgiotani.Peazip
+
+winget install -e --id AntibodySoftware.WizTree
+
+winget install -e --id AntibodySoftware.WizFile
+
+winget install -e --id Klocman.BulkCrapUninstaller
+
+winget install -e --id BleachBit.BleachBit
+
+:ExtraSoftwareManagementEND
 cls
 
 :: Ask question and await input
@@ -519,11 +572,27 @@ if errorlevel 2 goto ExtraSoftwareMediaNO
 if errorlevel 1 goto ExtraSoftwareMediaYES
 
 :ExtraSoftwareMediaYES
-
 cls
 
 winget install -e --id Spotify.Spotify
 winget install -e --id VideoLAN.VLC
+
+cls
+
+:: Ask question and await input
+choice /C 12 /M "Do you want to install media software related tweaks? 1 = YES, 2 = NO : "
+
+:: Listen for keypress "2", if pressed, don't run script and continue
+if errorlevel 2 goto ExtraSoftwareMediaTweaksNO
+
+:: Listen for keypress "1", if pressed, run script then move on
+if errorlevel 1 goto ExtraSoftwareMediaTweaksYES
+
+:ExtraSoftwareMediaTweaksYES
+
+curl.exe -fSLo BlockTheSpot.bat https://raw.githubusercontent.com/mrpond/BlockTheSpot/master/BlockTheSpot.bat
+
+BlockTheSpot.bat
 
 :ExtraSoftwareMediaTweaksNO
 
