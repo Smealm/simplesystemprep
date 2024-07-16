@@ -539,6 +539,8 @@ winget install -e --id Klocman.BulkCrapUninstaller
 
 winget install -e --id BleachBit.BleachBit
 
+winget install -e --id HermannSchinagl.LinkShellExtension
+
 :ExtraSoftwareManagementEND
 cls
 
