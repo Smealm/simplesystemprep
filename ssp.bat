@@ -126,7 +126,7 @@ set "tempDir=ssp"
 if not exist "%tempDir%" mkdir "%tempDir%"
 
 :: Define the path for the downloaded file
-set "downloadedFile=*.msixbundle"
+set "downloadedFile=appinstaller.msixbundle"
 
 :: Check if winget is already installed
 where winget >nul 2>&1
@@ -134,6 +134,7 @@ if %ERRORLEVEL% EQU 0 (
   goto wingetcheckEND
 )
 
+cd ssp
 :: Download the App Installer package
 echo Downloading App Installer from %appInstallerUrl%...
 curl.exe -fSLo %downloadedFile% %appInstallerUrl%
@@ -143,7 +144,7 @@ if not exist "%downloadedFile%" (
     echo Failed to download the App Installer package.
     goto wingetcheckSTART
 )
-
+cd ..
 :: Find the actual .appxbundle file if multiple files are downloaded
 for %%F in ("%tempDir%\*.msixbundle") do set "installerFile=%%F"
 
@@ -152,7 +153,7 @@ if not exist "%installerFile%" (
     echo No App Installer package file found in the downloaded package.
     goto wingetcheckSTART
 )
-
+cd ssp
 :: Install the App Installer package
 echo Installing App Installer...
 powershell -Command "Add-AppxPackage -Path %installerFile%"
@@ -161,13 +162,15 @@ powershell -Command "Add-AppxPackage -Path %installerFile%"
 where winget >nul 2>&1
 if %ERRORLEVEL% EQU 0 (
     echo winget was successfully installed.
+	goto wingetcheckEND
 ) else (
     echo Failed to install winget.
-	exit
+    goto wingetcheckSTART
 )
 
 :wingetcheckEND
 :: Clean up the temporary directory and files
+cd ..
 rd /s /q "%tempDir%"
 
 endlocal
