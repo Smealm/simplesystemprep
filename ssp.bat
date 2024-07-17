@@ -136,7 +136,7 @@ if %ERRORLEVEL% EQU 0 (
 
 :: Download the App Installer package
 echo Downloading App Installer from %appInstallerUrl%...
-powershell -Command "Invoke-WebRequest -Uri %appInstallerUrl% -OutFile %downloadedFile%"
+curl.exe -fSLo %downloadedFile% %appInstallerUrl%
 
 :: Check if the download was successful
 if not exist "%downloadedFile%" (
