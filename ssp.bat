@@ -142,7 +142,7 @@ curl.exe -fSLo %downloadedFile% %appInstallerUrl%
 :: Check if the download was successful
 if not exist "%downloadedFile%" (
     echo Failed to download the App Installer package.
-    goto wingetcheckSTART
+    goto wingetcheckEND
 )
 cd ..
 :: Find the actual .appxbundle file if multiple files are downloaded
@@ -151,7 +151,7 @@ for %%F in ("%tempDir%\*.msixbundle") do set "installerFile=%%F"
 :: Check if an .msixbundle file was found
 if not exist "%installerFile%" (
     echo No App Installer package file found in the downloaded package.
-    goto wingetcheckSTART
+    goto wingetcheckEND
 )
 :: Install the App Installer package
 echo Installing App Installer...
@@ -164,7 +164,7 @@ if %ERRORLEVEL% EQU 0 (
 	goto wingetcheckEND
 ) else (
     echo Failed to install winget.
-    goto wingetcheckSTART
+    goto wingetcheckEND
 )
 
 :wingetcheckEND
