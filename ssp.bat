@@ -153,7 +153,6 @@ if not exist "%installerFile%" (
     echo No App Installer package file found in the downloaded package.
     goto wingetcheckSTART
 )
-cd ssp
 :: Install the App Installer package
 echo Installing App Installer...
 powershell -Command "Add-AppxPackage -Path %installerFile%"
