@@ -114,6 +114,25 @@ powershell -c "irm https://massgrave.dev/get | iex"
 :ActivateEND
 endlocal
 
+:wingetCheckerSTART
+cls
+
+:: Check if 'winget' is available
+where winget >nul 2>nul
+
+:: Check the errorlevel to see if 'winget' was found
+if %errorlevel% neq 0 (
+@echo 'App Installer' is not installed.
+@echo you will be redirected to the Microsoft store page for 'App Installer'.
+@echo If you don't want to install 'App Installer' then simply close this script, otherwise
+pause
+start https://www.microsoft.com/store/productId/9NBLGGH4NNS1
+goto wingetCheckerSTART
+) else (
+goto wingetCheckerEND
+)
+
+:wingetCheckerEND
 
 :: --------------------------------------------------------------------------------------------
 cls
