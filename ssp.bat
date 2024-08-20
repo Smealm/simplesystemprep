@@ -258,7 +258,7 @@ cls
 
 
 :: Goes along with downloading AME Wizard and going through with the playbook installation proccess depending on user input
-choice /C 123 /M "Do you want to download AME Wizard and go through the process of installing a playbook one your system? 1 = YES, 2 = NO, 3 = Learn More : "
+choice /C 123 /M "Do you want to download AME Wizard and go through the process of installing a playbook on your system? 1 = YES, 2 = NO, 3 = Learn More : "
 
 :: Listen for keypress "3", if pressed, open AME Wizard's Website and return
 if errorlevel 3 goto AMEWhat
