@@ -8,10 +8,6 @@ cls
 
 :: UPDATE PROGRAMS WITH STATIC URL's HERE
 
-:: OBS-MULTI-RTMP INFORMATION
-:: obs-multi-rtmp Version
-set OBSMultiRTMPVersion="0.6.0.1"
-
 :: AME WIZARD INFORMATION
 :: AME Wizard Version
 set AMEVersion="0.7.5"
@@ -81,6 +77,23 @@ goto AdminCheckEND
 :: Cleanup terminal text
 cls
 
+:: Check if winget is available
+:WINGETCHECKSTART
+@echo off
+where winget >nul 2>&1
+
+if %errorlevel% == 0 (
+goto WINGETCHECKEND
+) else (
+echo Winget is not installed.
+pause
+start https://aka.ms/getwinget
+echo Please install winget from the Microsoft Store or visit https://aka.ms/getwinget
+pause
+goto WINGETCHECKSTART
+)
+:WINGETCHECKEND
+
 :: Checking if windows is activated
 @echo checking if Windows is activated
 setlocal
@@ -114,32 +127,11 @@ powershell -c "irm https://massgrave.dev/get | iex"
 :ActivateEND
 endlocal
 
-:wingetCheckerSTART
-cls
-
-:: Check if 'winget' is available
-where winget >nul 2>nul
-
-:: Check the errorlevel to see if 'winget' was found
-if %errorlevel% neq 0 (
-@echo 'App Installer' is not installed.
-@echo you will be redirected to the Microsoft store page for 'App Installer'.
-@echo If you don't want to install 'App Installer' then simply close this script, otherwise
-pause
-start https://www.microsoft.com/store/productId/9NBLGGH4NNS1
-goto wingetCheckerSTART
-) else (
-goto wingetCheckerEND
-)
-
-:wingetCheckerEND
-
 :: --------------------------------------------------------------------------------------------
 cls
 
 :: RUN MAIN SCRIPT
 :ScriptSTART
-
 
 :: --------------------------------------------------------------------------------------------
 cls
@@ -258,313 +250,6 @@ cd ..
 rmdir /s /q ssp
 
 :DependenciesEnd
-
-
-:: --------------------------------------------------------------------------------------------
-cls
-
-:: EXTRA SOFTWARE
-
-:: Goes along with downloading, installing and deleting extra software depending on user input
-choice /C 12 /M "Do you want to install extra software? 1 = YES, 2 = NO : "
-
-:: Listen for keypress "2", if pressed, don't run script and continue
-if errorlevel 2 goto ExtraSoftwareEND
-
-:: Listen for keypress "1", if pressed, run script then move on
-if errorlevel 1 goto ExtraSoftwareYES
-:ExtraSoftwareYES
-cls
-
-:: Create "ssp" directory
-mkdir ssp
-
-:: Go into "ssp" directory
-cd ssp
-
-cls
-
-:: Ask question and await input
-choice /C 12 /M "Do you want to install gaming related software? 1 = YES, 2 = NO : "
-
-:: Listen for keypress "2", if pressed, don't run script and continue
-if errorlevel 2 goto ExtraSoftwareGamingEND
-
-:: Listen for keypress "1", if pressed, run script then move on
-if errorlevel 1 goto ExtraSoftwareGamingYES
-
-:ExtraSoftwareGamingYES
-cls
-
-winget install -e --id Discord.Discord
-
-winget install -e --id Valve.Steam
-
-winget install -e --id EpicGames.EpicGamesLauncher
-
-winget install -e --id GOG.Galaxy
-
-winget install -e --id Mojang.MinecraftLauncher
-
-cls
-:: Ask question and await input
-choice /C 12 /M "Do you want to install optional tweaks for gaming related software? 1 = YES, 2 = NO : "
-
-:: Listen for keypress "2", if pressed, don't run script and continue
-if errorlevel 2 goto ExtraSoftwareGamingTweaksNO
-
-:: Listen for keypress "1", if pressed, run script then move on
-if errorlevel 1 goto ExtraSoftwareGamingTweaksYES
-
-:ExtraSoftwareGamingTweaksYES
-
-curl.exe -fSLo VencordInstaller.exe https://github.com/Vencord/Installer/releases/latest/download/VencordInstaller.exe
-
-taskkill /im "discord.exe" /f
-
-VencordInstaller.exe
-
-:ExtraSoftwareGamingTweaksNO
-cls
-
-:: Ask question and await input
-choice /C 12 /M "Do you want to install emulation software? 1 = YES, 2 = NO : "
-
-:: Listen for keypress "2", if pressed, don't run script and continue
-if errorlevel 2 goto ExtraSoftwareGamingEmulationNO
-
-:: Listen for keypress "1", if pressed, run script then move on
-if errorlevel 1 goto ExtraSoftwareGamingEmulationYES
-
-:ExtraSoftwareGamingEmulationYES
-cls
-
-:: Ask question and await input
-choice /C 123 /M "Which emulation frontend do you want to install, RetroArch or LaunchBox? 1 = RetroArch, 2 = LaunchBox, 3 = Learn More : "
-
-:: Listen for keypress "3", if pressed, don't run script and continue
-if errorlevel 3 goto ExtraSoftwareGamingEmulationRetroLaunchWhat
-
-:: Listen for keypress "2", if pressed, don't run script and continue
-if errorlevel 2 goto ExtraSoftwareGamingEmulationLaunchbox
-
-:: Listen for keypress "1", if pressed, run script then move on
-if errorlevel 1 goto ExtraSoftwareGamingEmulationRetroarch
-
-:ExtraSoftwareGamingEmulationRetroLaunchWhat
-cls
-
-:: Ask question and await input
-choice /C 123 /M "Which frontend do you want to learn about? 1 = RetroArch, 2 = LaunchBox, 3 = Go Back : "
-
-:: Listen for keypress "3", if pressed, don't run script and continue
-if errorlevel 3 goto ExtraSoftwareGamingEmulationYES
-
-:: Listen for keypress "2", if pressed, don't run script and continue
-if errorlevel 2 goto ExtraSoftwareGamingEmulationLaunchboxWhat
-
-:: Listen for keypress "1", if pressed, run script then move on
-if errorlevel 1 goto ExtraSoftwareGamingEmulationRetroarchWhat
-
-:ExtraSoftwareGamingEmulationRetroarchWhat
-
-start https://www.retroarch.com/
-goto ExtraSoftwareGamingEmulationRetroLaunchWhat
-
-:ExtraSoftwareGamingEmulationLaunchboxWhat
-
-start https://www.launchbox-app.com/about
-goto ExtraSoftwareGamingEmulationRetroLaunchWhat
-
-:ExtraSoftwareGamingEmulationRetroarch
-
-winget install -e --id Libretro.RetroArch
-
-goto ExtraSoftwareGamingEmulationRetroLaunchEND
-
-:ExtraSoftwareGamingEmulationLaunchbox
-
-cls
-@echo You have chose to download LaunchBox! 
-@echo Your browser will soon open, once it's follow the instructions to get the download link
-@echo Please download the EXE to the scripts's "ssp" folder.
-@echo DO NOT change the name of the downloaded EXE file!
-Pause
-start https://www.launchbox-app.com/download
-@echo Once you have completed the steps above
-Pause
-cls
-
-setlocal
-
-:: Find LaunchBox.
-for /f "delims=" %%F in ('dir /b /a-d "%~dp0\ssp\LaunchBox-*.exe" 2^>nul') do (
-
-:: run the file
-start "" "%~dp0\ssp\%%F"
-)
-endlocal
-
-:ExtraSoftwareGamingEmulationRetroLaunchEND
-
-winget install -e --id Google.PlayGames.Beta
-
-:ExtraSoftwareGamingEmulationNO
-cls
-
-:: Ask question and await input
-choice /C 123 /M "Do you want to install Playnite? 1 = YES, 2 = NO, 3 = Learn More : "
-
-:: Listen for keypress "3", if pressed, don't run script and continue
-if errorlevel 3 goto ExtraSoftwareGamingPlayniteWhat
-
-:: Listen for keypress "2", if pressed, don't run script and continue
-if errorlevel 2 goto ExtraSoftwareGamingPlayniteEND
-
-:: Listen for keypress "1", if pressed, run script then move on
-if errorlevel 1 goto ExtraSoftwareGamingPlayniteYES
-
-:ExtraSoftwareGamingPlayniteWhat
-
-start https://playnite.link/
-goto ExtraSoftwareGamingEmulationNO
-
-:ExtraSoftwareGamingPlayniteYES
-
-winget install -e --id Playnite.Playnite
-
-:ExtraSoftwareGamingPlayniteEND
-cls
-
-:: Ask question and await input
-choice /C 123 /M "Do you want to install Flashpoint? 1 = YES, 2 = NO, 3 = Learn More : "
-
-:: Listen for keypress "3", if pressed, don't run script and continue
-if errorlevel 3 goto ExtraSoftwareGamingFlashpointWhat
-
-:: Listen for keypress "2", if pressed, don't run script and continue
-if errorlevel 2 goto ExtraSoftwareGamingFlashpointEND
-
-:: Listen for keypress "1", if pressed, run script then move on
-if errorlevel 1 goto ExtraSoftwareGamingFlashpointYES
-
-:ExtraSoftwareGamingFlashpointWhat
-
-start https://flashpointarchive.org/
-goto ExtraSoftwareGamingEmulationNO
-
-:ExtraSoftwareGamingFlashpointYES
-
-curl.exe -fSLo FlashpointInstaller.exe https://github.com/FlashpointProject/FlashpointComponentTools/releases/latest/download/FlashpointInstaller.exe
-FlashpointInstaller.exe
-
-:ExtraSoftwareGamingFlashpointEND
-
-:ExtraSoftwareGamingEND
-cls
-
-:: Ask question and await input
-choice /C 12 /M "Do you want to install network related software? 1 = YES, 2 = NO : "
-
-:: Listen for keypress "2", if pressed, don't run script and continue
-if errorlevel 2 goto ExtraSoftwareNetworkEND
-
-:: Listen for keypress "1", if pressed, run script then move on
-if errorlevel 1 goto ExtraSoftwareNetworkYES
-
-:ExtraSoftwareNetworkYES
-
-winget install -e --id Cloudflare.Warp
-
-:ExtraSoftwareNetworkEND
-cls
-
-:: Ask question and await input
-choice /C 12 /M "Do you want to install data management software? 1 = YES, 2 = NO : "
-
-:: Listen for keypress "2", if pressed, don't run script and continue
-if errorlevel 2 goto ExtraSoftwareManagementEND
-
-:: Listen for keypress "1", if pressed, run script then move on
-if errorlevel 1 goto ExtraSoftwareManagementYES
-
-:ExtraSoftwareManagementYES
-
-winget install -e --id Giorgiotani.Peazip
-
-winget install -e --id AntibodySoftware.WizTree
-
-winget install -e --id AntibodySoftware.WizFile
-
-winget install -e --id Klocman.BulkCrapUninstaller
-
-winget install -e --id BleachBit.BleachBit
-
-winget install -e --id HermannSchinagl.LinkShellExtension
-
-:ExtraSoftwareManagementEND
-cls
-
-:: Ask question and await input
-choice /C 12 /M "Do you want to install software for content creation? 1 = YES, 2 = NO : "
-
-:: Listen for keypress "2", if pressed, don't run script and continue
-if errorlevel 2 goto ExtraSoftwareContentCreationEND
-
-:: Listen for keypress "1", if pressed, run script then move on
-if errorlevel 1 goto ExtraSoftwareContentCreationYES
-
-:ExtraSoftwareContentCreationYES
-
-winget install -e --id OBSProject.OBSStudio
-
-curl.exe -fSLo obs-multi-rtmp-%OBSMultiRTMPVersion%-windows-x64-Installer.exe https://github.com/sorayuki/obs-multi-rtmp/releases/download/%OBSMultiRTMPVersion%/obs-multi-rtmp-%OBSMultiRTMPVersion%-windows-x64-Installer.exe
-
-obs-multi-rtmp-%OBSMultiRTMPVersion%-windows-x64-Installer.exe
-
-:ExtraSoftwareContentCreationEND
-cls
-
-:: Ask question and await input
-choice /C 12 /M "Do you want to install software to play audio and or visual content? 1 = YES, 2 = NO : "
-
-:: Listen for keypress "2", if pressed, don't run script and continue
-if errorlevel 2 goto ExtraSoftwareMediaNO
-
-:: Listen for keypress "1", if pressed, run script then move on
-if errorlevel 1 goto ExtraSoftwareMediaYES
-
-:ExtraSoftwareMediaYES
-cls
-
-winget install -e --id Spotify.Spotify
-winget install -e --id VideoLAN.VLC
-
-cls
-
-:: Ask question and await input
-choice /C 12 /M "Do you want to install media software related tweaks? 1 = YES, 2 = NO : "
-
-:: Listen for keypress "2", if pressed, don't run script and continue
-if errorlevel 2 goto ExtraSoftwareMediaTweaksNO
-
-:: Listen for keypress "1", if pressed, run script then move on
-if errorlevel 1 goto ExtraSoftwareMediaTweaksYES
-
-:ExtraSoftwareMediaTweaksYES
-
-curl.exe -fSLo BlockTheSpot.bat https://raw.githubusercontent.com/mrpond/BlockTheSpot/master/BlockTheSpot.bat
-
-BlockTheSpot.bat
-
-:ExtraSoftwareMediaTweaksNO
-
-:ExtraSoftwareMediaNO
-
-:ExtraSoftwareEND
-
-cd ..
-rmdir /s /q ssp
 
 :: --------------------------------------------------------------------------------------------
 cls
@@ -706,6 +391,7 @@ if errorlevel 2 goto RestartWindowsEND
 if errorlevel 1 goto RestartWindows
 
 :RestartWindows
+rmdir /s /q ssp
 shutdown /r
 ) else (
     goto RestartWindowsEND
