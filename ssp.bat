@@ -164,6 +164,9 @@ move oalinst\oalinst.exe
 del oalinst.zip
 rmdir /s /q oalinst
 
+:: Download PhysX
+curl.exe -fSLo PhysX-9.19.0218-SystemSoftware.exe https://us.download.nvidia.com/Windows/9.19.0218/PhysX-9.19.0218-SystemSoftware.exe
+
 :: Download Java
 curl.exe -fSLo JavaInstall.exe https://ninite.com/adoptjavax11-adoptjavax17-adoptjavax21-adoptjavax8/ninite.exe
 
@@ -229,6 +232,9 @@ oalinst.exe
 
 :: Run xnafx40_redist.msi
 xnafx40_redist.msi
+
+:: Run PhysX-9.19.0218-SystemSoftware.exe
+PhysX-9.19.0218-SystemSoftware.exe
 
 :: Run DotNetRuntime.exe 
 DotNetRuntime.exe
