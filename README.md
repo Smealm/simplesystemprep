@@ -10,3 +10,6 @@ This script does the following
 5. Installs Emulation software, [RetroArch](https://www.retroarch.com/), [Google Play Games](https://play.google.com/googleplaygames) and [Flashpoint](https://flashpointarchive.org/)
 6. Installs [AME Wizard](https://ameliorated.io/) and your prefered [Playbook](https://docs.ameliorated.io/playbooks.html)
 7. If script is ran as an administrator it will ask if you want to restart your PC after everything is finished (Recommended after installing certain system dependencies and most drivers)
+
+Most things in the script are optional and can be skipped
+Might be better to just use WinUtil or something for software downloading, which is most of what this script does.
