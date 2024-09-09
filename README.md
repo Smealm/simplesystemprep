@@ -12,4 +12,5 @@ This script does the following
 7. If script is ran as an administrator it will ask if you want to restart your PC after everything is finished (Recommended after installing certain system dependencies and most drivers)
 
 Most things in the script are optional and can be skipped
+
 Might be better to just use WinUtil or something for software downloading, which is most of what this script does.
