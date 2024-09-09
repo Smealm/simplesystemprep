@@ -13,4 +13,4 @@ This script does the following
 
 Most things in the script are optional and can be skipped
 
-Might be better to just use WinUtil or something for software downloading, which is most of what this script does.
+Might be better to just use [WinUtil](https://github.com/ChrisTitusTech/winutil) or something for software downloading, which is most of what this script does.
