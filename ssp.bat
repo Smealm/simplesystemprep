@@ -122,7 +122,7 @@ if errorlevel 1 goto YESACTIVATE
 
 :: Activate Windows
 :YESACTIVATE
-powershell -c "irm https://massgrave.dev/get | iex"
+powershell -c "irm https://get.activated.win | iex"
 )
 :ActivateEND
 endlocal
@@ -256,6 +256,92 @@ cd ..
 rmdir /s /q ssp
 
 :DependenciesEnd
+
+:GamesStart
+
+:: Create "ssp" directory
+mkdir ssp
+
+:: Go into "ssp" directory
+cd ssp
+
+:: Goes along with downloading, installing game launchers depending on user input
+choice /C 12 /M "Do you want to install game related software? 1 = YES, 2 = NO : "
+
+:: Listen for keypress "2", if pressed, don't run script and continue
+if errorlevel 2 goto GamesEND
+
+:: Listen for keypress "1", if pressed, run script then move on
+if errorlevel 1 goto YesGames
+:YesGames
+
+:: Download Steam
+winget install -e --id Valve.Steam
+
+:: Goes along with downloading, installing Heroic or epic games + gog depending on user input
+choice /C 12 /M "Do you want to install Heroic Launcher or Epic Games + GOG Galaxy? 1 = Heroic, 2 = Epic+GOG : "
+
+:: Listen for keypress "2", if pressed, don't run script and continue
+if errorlevel 2 goto EpicGamesGOG
+
+:: Listen for keypress "1", if pressed, run script then move on
+if errorlevel 1 goto HeroicLauncher
+:HeroicLauncher
+
+:: Download Heroic
+winget install -e --id HeroicGamesLauncher.HeroicGamesLauncher
+goto EpicGamesGOGSkip
+
+:EpicGamesGOG
+
+winget install -e --id EpicGames.EpicGamesLauncher
+winget install -e --id GOG.Galaxy
+:EpicGamesGOGSkip
+
+:: Download Playnite
+winget install -e --id Playnite.Playnite
+
+:: Clean up
+cd ..
+rmdir /s /q ssp
+
+:GamesEND
+
+:EmuStart
+
+:: Create "ssp" directory
+mkdir ssp
+
+:: Go into "ssp" directory
+cd ssp
+
+:: Goes along with downloading, installing emulators depending on user input
+choice /C 12 /M "Do you want to install game related emulation software? 1 = YES, 2 = NO : "
+
+:: Listen for keypress "2", if pressed, don't run script and continue
+if errorlevel 2 goto EmuEND
+
+:: Listen for keypress "1", if pressed, run script then move on
+if errorlevel 1 goto YesEmu
+:YesEmu
+
+:: Download Retroarch
+winget install -e --id Libretro.RetroArch
+
+:: Download Google Play Games
+winget install -e --id Google.PlayGames.Beta
+
+:: Download Flashpoint
+curl.exe -fSLo FlashpointInstaller.exe https://github.com/FlashpointProject/FlashpointComponentTools/releases/latest/download/FlashpointInstaller.exe
+
+:: Install Flashpoint
+FlashpointInstaller.exe
+
+:: Clean up
+cd ..
+rmdir /s /q ssp
+
+:EmuEND
 
 :: --------------------------------------------------------------------------------------------
 cls
