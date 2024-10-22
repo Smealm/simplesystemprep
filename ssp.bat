@@ -173,6 +173,9 @@ curl.exe -fSLo JavaInstall.exe https://ninite.com/adoptjavax11-adoptjavax17-adop
 :: Download .Net Desktop Runtime
 curl.exe -fSLo DotNetRuntime.exe https://ninite.com/.net4.8-.netx5-.netx6-.netx7-.netx8/ninite.exe
 
+:: Download Apple Mobile Drivers using https://github.com/NelloKudo/Apple-Mobile-Drivers-Installer
+powershell iex (Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/NelloKudo/Apple-Mobile-Drivers-Installer/main/AppleDrivInstaller.ps1')
+
 :: Download DirectX Runtime
 winget install -e --id Microsoft.DirectX
 
